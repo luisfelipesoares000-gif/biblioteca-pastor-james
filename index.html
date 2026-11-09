@@ -36,7 +36,9 @@
       flex-direction: column;
     }
 
-    /* TELA DE LOGIN */
+    /* ========================================= */
+    /* 1. TELA DE LOGIN                          */
+    /* ========================================= */
     .login-overlay {
       position: fixed;
       inset: 0;
@@ -142,7 +144,9 @@
       40%, 80% { transform: translateX(8px); }
     }
 
-    /* CABEÇALHO */
+    /* ========================================= */
+    /* 2. CABEÇALHO E NAVEGAÇÃO                  */
+    /* ========================================= */
     header {
       text-align: center;
       padding: 3rem 1.5rem 2rem 1.5rem;
@@ -206,7 +210,9 @@
       font-size: 1.1rem;
     }
 
-    /* ÁREA PRINCIPAL */
+    /* ========================================= */
+    /* 3. CONTEÚDO PRINCIPAL E BUSCA             */
+    /* ========================================= */
     main {
       flex: 1;
       width: 100%;
@@ -240,6 +246,7 @@
       padding: 0.8rem 1.5rem;
       font-size: 1.05rem;
       background: transparent;
+      color: var(--text-main);
     }
 
     .search-button {
@@ -268,6 +275,7 @@
       border-radius: 40px;
       cursor: pointer;
       transition: all 0.2s;
+      white-space: nowrap;
     }
 
     .home-reset-btn:hover {
@@ -323,7 +331,9 @@
       to { transform: rotate(360deg); }
     }
 
-    /* GRID DE LIVROS */
+    /* ========================================= */
+    /* 4. GRID DE CARDS                          */
+    /* ========================================= */
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -354,6 +364,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      overflow: hidden;
     }
 
     .book-cover {
@@ -362,7 +373,7 @@
       object-fit: cover;
     }
 
-    .badge-internal {
+    .badge-tag {
       position: absolute;
       top: 10px;
       left: 10px;
@@ -391,12 +402,20 @@
       color: var(--navy-primary);
       margin-bottom: 0.3rem;
       line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .book-author {
       font-size: 0.9rem;
       color: var(--text-muted);
       margin-bottom: 1.2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .card-actions {
@@ -447,7 +466,7 @@
     }
 
     /* ========================================= */
-    /* LEITOR EMBUTIDO (FIXED & FULLSCREEN)      */
+    /* 5. MODAL DO LEITOR EMBUTIDO               */
     /* ========================================= */
     .reader-modal {
       position: fixed;
@@ -463,7 +482,7 @@
     .reader-window {
       background: var(--card-bg);
       width: 100%;
-      max-width: 900px;
+      max-width: 950px;
       height: 94vh;
       border-radius: 12px;
       display: flex;
@@ -472,7 +491,6 @@
       box-shadow: 0 16px 45px rgba(0,0,0,0.4);
     }
 
-    /* Ajuste quando entra em tela cheia nativa */
     :fullscreen .reader-window,
     :-webkit-full-screen .reader-window {
       max-width: 100vw;
@@ -537,8 +555,24 @@
       background: var(--navy-hover);
     }
 
-    .reader-content-area {
+    .reader-body-container {
       flex: 1;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: #ffffff;
+    }
+
+    .reader-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .reader-content-area {
+      position: absolute;
+      inset: 0;
       padding: 3rem 4rem;
       overflow-y: auto;
       font-family: var(--font-serif);
@@ -546,6 +580,7 @@
       line-height: 1.85;
       color: #2b2622;
       background: #ffffff;
+      display: none;
     }
 
     .theme-sepia {
@@ -584,7 +619,6 @@
       text-indent: 1.5rem;
     }
 
-    /* FORMATO DE IMPRESSÃO / SALVAR EM PDF */
     @media print {
       body * {
         visibility: hidden;
@@ -666,16 +700,17 @@
           type="text" 
           id="searchInput" 
           class="search-input" 
-          placeholder="Pesquise títulos ou temas (ex: A família do pastor, Oração, Spurgeon)..." 
+          placeholder="Pesquise qualquer livro (ex: Bastidores de um Líder, Família, Spurgeon)..." 
         />
         <button id="searchBtn" class="search-button">Buscar</button>
       </div>
       <button id="resetSearchBtn" class="home-reset-btn" title="Limpar pesquisa e voltar ao Início">Voltar ao Início</button>
     </section>
 
-    <!-- ABAS -->
+    <!-- ABAS / CATEGORIAS -->
     <div class="quick-filters">
       <button class="filter-btn active" data-filter="todos">Todos os Livros</button>
+      <button class="filter-btn" data-filter="lideranca">Liderança & Ministério</button>
       <button class="filter-btn" data-filter="familia">Família & Casamento</button>
       <button class="filter-btn" data-filter="devocional">Pão Diário & Oração</button>
       <button class="filter-btn" data-filter="teologia">Teologia & Clássicos</button>
@@ -688,91 +723,104 @@
       <p id="statusText">Buscando no acervo...</p>
     </div>
 
-    <!-- GRID -->
+    <!-- GRID DE LIVROS -->
     <section id="booksGrid" class="books-grid"></section>
   </main>
 
-  <!-- LEITOR COM TELA CHEIA E IMPRESSÃO EM PDF DIRETA -->
+  <!-- MODAL DE LEITURA (IFRAME OU TEXTO EMBUTIDO) -->
   <div id="readerModal" class="reader-modal">
     <div class="reader-window" id="readerWindow">
       <div class="reader-toolbar">
         <div class="reader-book-title" id="readerBookTitle">Lendo Livro</div>
         <div class="reader-controls">
-          <button class="ctrl-btn" id="readerPdfBtn" title="Baixar / Salvar PDF direto no navegador">📥 Salvar PDF</button>
+          <button class="ctrl-btn" id="openExternalTabBtn" title="Abrir Leitura em Nova Aba">↗ Nova Aba</button>
+          <button class="ctrl-btn" id="readerPdfBtn" title="Salvar / Imprimir em PDF">📥 PDF</button>
           <button class="ctrl-btn" id="fullscreenBtn" title="Alternar Tela Cheia">⛶ Tela Cheia</button>
-          <button class="ctrl-btn" id="fontDecBtn" title="Diminuir Fonte">A-</button>
-          <button class="ctrl-btn" id="fontIncBtn" title="Aumentar Fonte">A+</button>
-          <button class="ctrl-btn" id="themeSepiaBtn" title="Modo Sépia">📜</button>
-          <button class="ctrl-btn" id="themeNightBtn" title="Modo Noturno">🌙</button>
-          <button class="ctrl-btn" id="themeLightBtn" title="Modo Claro">☀️</button>
+          <button class="ctrl-btn text-ctrl" id="fontDecBtn" title="Diminuir Fonte">A-</button>
+          <button class="ctrl-btn text-ctrl" id="fontIncBtn" title="Aumentar Fonte">A+</button>
+          <button class="ctrl-btn text-ctrl" id="themeSepiaBtn" title="Modo Sépia">📜</button>
+          <button class="ctrl-btn text-ctrl" id="themeNightBtn" title="Modo Noturno">🌙</button>
+          <button class="ctrl-btn text-ctrl" id="themeLightBtn" title="Modo Claro">☀️</button>
           <button id="closeReaderBtn" class="close-reader-btn">✕ Fechar</button>
         </div>
       </div>
-      <div id="readerContentArea" class="reader-content-area"></div>
+      <div class="reader-body-container">
+        <iframe id="readerIframe" class="reader-iframe" title="Leitor Integrado"></iframe>
+        <div id="readerContentArea" class="reader-content-area"></div>
+      </div>
     </div>
   </div>
 
   <footer>
-    Feito com amor para o Pastor James • Leitor Próprio com Histórico e Download Direto
+    Feito com amor para o Pastor James • Integrado ao Google Books & Acervo Pastoral
   </footer>
 
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT: GOOGLE BOOKS API, LEITOR MODAL E HISTÓRICO    -->
+  <!-- ========================================================= -->
   <script>
     const CORRECT_PASSWORD = "LIVROS007";
-    const AUTH_KEY = "pastor_james_library_auth_v4";
-    const HISTORY_KEY = "pastor_james_history_v4";
+    const AUTH_KEY = "pastor_james_library_auth_v5";
+    const HISTORY_KEY = "pastor_james_history_v5";
+
+    // Imagem elegante padrão em SVG caso a capa esteja ausente
+    const DEFAULT_COVER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400" fill="#f0ebe1">
+        <rect width="300" height="400" fill="#f2eee7"/>
+        <rect x="20" y="20" width="260" height="360" rx="8" fill="#e5dfd3" stroke="#d5cdbe" stroke-width="2"/>
+        <path d="M150 145 L110 115 V235 L150 255 L190 235 V115 Z" fill="#b38634" opacity="0.75"/>
+        <text x="150" y="295" font-family="Georgia, serif" font-size="15" fill="#6b635b" text-anchor="middle" font-weight="bold">Capa Indisponível</text>
+      </svg>
+    `);
 
     /* =========================================================
-       ACERVO PRÓPRIO COMPLETO DO PASTOR JAMES
+       ACERVO LOCAL DE BASE (CLÁSSICOS SEMPRE DISPONÍVEIS)
        ========================================================= */
     const LOCAL_BOOKS = [
       {
+        id: "bastidores-lider-destaque",
+        category: "lideranca",
+        title: "Bastidores de um Líder",
+        author: "Lucas Hayashi",
+        cover: "https://books.google.com/books/content?id=h3xTEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        googleReaderUrl: "https://books.google.com/books?id=h3xTEAAAQBAJ&printsec=frontcover&output=embed",
+        content: `
+          <h2>Bastidores de um Líder: O Caráter Invisível</h2>
+          <div class="devotional-verse">
+            "Acima de tudo, guarde o seu coração, pois dele procedem as fontes da vida." — Provérbios 4:23
+          </div>
+          <p>O ministério visível diante do público nunca pode ultrapassar a profundidade da vida oculta diante de Deus. Nos bastidores da liderança, onde não há holofotes, aplausos ou púlpitos, são forjados os verdadeiros alicerces do pastor.</p>
+          <p>Um líder não cai quando comete um erro público, mas quando, há muito tempo em secreto, negligenciou o seu altar pessoal, a intimidade da oração e a prestação de contas com quem ama.</p>
+          <p>Conserve a sua pureza, ame as pessoas nos bastidores tanto quanto você as exorta nos sermões, e lembre-se: Deus não chama você para ser famoso, mas para ser fiel.</p>
+        `
+      },
+      {
         id: "familia-do-pastor",
         category: "familia",
-        title: "A Família do Pastor: Edificação, Sacerdócio e Desafios no Lar",
+        title: "A Família do Pastor: Sacerdócio e Desafios no Lar",
         author: "Pr. James & Sabedoria Bíblica",
         cover: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>A Família do Pastor: O Primeiro e Mais Nobre Ministério</h2>
+          <h2>A Família do Pastor: O Primeiro Ministério</h2>
           <div class="devotional-verse">
             "Pois, se alguém não sabe governar a sua própria casa, como cuidará da igreja de Deus?" — 1 Timóteo 3:5
           </div>
-          <p>O ministério pastoral traz consigo privilégios eternos, mas também responsabilidades espirituais profundas. Diante das demandas do rebanho, de visitas nos hospitais, preparo de mensagens e aconselhamentos que consomem horas do dia, existe uma tentação constante: colocar o púlpito à frente do próprio lar.</p>
-          <p>No entanto, aos olhos do Criador, a família não é um anexo do ministério; <strong>a família é o primeiro ministério do pastor</strong>. Seus filhos precisam, antes de um pregador eloquente, de um pai atencioso, que ouça seus medos e sente-se à mesa para sorrir com eles. Sua esposa não é apenas a auxiliadora ministerial da igreja, mas a companheira da sua alma, digna de honra, carinho diário e proteção emocional.</p>
-          <p>Quando as luzes do templo se apagam e o som do coral silencia, são as paredes da casa pastoral que abrigam a realidade da vida. Cuide com ternura do seu altar doméstico. Um ministério abençoado floresce a partir de um casamento restaurado e de um lar onde habita a paz do Senhor.</p>
-          <div class="devotional-verse">
-            <strong>Oração Pastoral:</strong> Senhor Deus, renova as forças do Teu servo. Que o lar do Pastor James seja um manancial de paz, alegria e proteção divina. Guarda seus filhos e abençoa o seu casamento a cada novo dia. Em nome de Jesus, Amém.
-          </div>
+          <p>O sucesso de um ministério pastoral começa dentro de casa. Seus filhos precisam, antes de um pregador de multidões, de um pai carinhoso e presente. Sua esposa precisa de um marido amoroso e companheiro.</p>
+          <p>Cuide da sua família com a mesma dedicação com que você pastoreia as ovelhas, pois o seu lar é o santuário que sustenta o seu chamado.</p>
         `
       },
       {
         id: "pao-diario-devocional",
         category: "devocional",
-        title: "Pão Diário: Meditações da Graça e Força para a Alma",
+        title: "Pão Diário: Meditações da Graça e Força",
         author: "C.H. Spurgeon & Acervo Pastoral",
         cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>Pão Diário: O Maná Que Alimenta nas Tribulações</h2>
+          <h2>Pão Diário: O Maná Que Nutre o Espírito</h2>
           <div class="devotional-verse">
             "Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós." — 1 Pedro 5:7
           </div>
-          <p>A ansiedade é um fardo pesado demais para os ombros humanos. Quantas noites os homens e mulheres de Deus passam acordados pensando no dia de amanhã, nas contas a saldar, nos desvios dos jovens e nas aflições dos enfermos.</p>
-          <p>O apóstolo Pedro nos convida a um ato consciente de entrega: <em>lançar</em>. Não se trata de segurar o fardo enquanto oramos, mas de passar o peso das nossas mãos para as mãos Daquele que nunca dorme e que comanda o movimento dos mares e das estrelas.</p>
-          <p>Receba hoje a porção do maná divino. A graça de Deus não falha e é renovada pontualmente a cada alvorada. Respire a paz do Espírito Santo e descanse o seu coração.</p>
-        `
-      },
-      {
-        id: "oracao-poderosa",
-        category: "devocional",
-        title: "O Homem de Oração: O Segredo do Avivamento Pessoal",
-        author: "E.M. Bounds & John Wesley",
-        cover: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=500&auto=format&fit=crop&q=80",
-        content: `
-          <h2>O Poder da Oração Secreta</h2>
-          <div class="devotional-verse">
-            "Mas tu, quando orares, entra no teu aposento e, fechando a tua porta, ora a teu Pai que está em secreto." — Mateus 6:6
-          </div>
-          <p>A igreja não precisa de melhores maquinários, de programas mais atrativos ou de métodos humanos mais persuasivos; o que a igreja necessita desesperadamente é de pessoas que saibam dobrar os joelhos em oração.</p>
-          <p>O homem que prevalece de joelhos diante de Deus é capaz de permanecer de pé diante de qualquer adversidade humana. A oração não transforma Deus; a oração transforma quem ora, alinhando a vontade humana com os desígnios soberanos dos céus.</p>
+          <p>A cada manhã, as misericórdias do Senhor se renovam sobre o Seu povo. Não tente carregar as preocupações do futuro com as forças limitadas de hoje. Descanse no cuidado soberano Daquele que cuida das aves do céu e dos lírios do campo.</p>
         `
       },
       {
@@ -782,27 +830,11 @@
         author: "John Bunyan",
         cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>A Fuga da Cidade da Destruição</h2>
+          <h2>A Marcha Rumo à Porta Estreita</h2>
           <div class="devotional-verse">
             "Entrai pela porta estreita; porque larga é a porta, e espaçoso o caminho que conduz à perdição." — Mateus 7:13
           </div>
-          <p>Caminhando pelo deserto deste mundo, deitei-me numa caverna para dormir e tive um sonho vívido. Vi um homem vestido de andrajos, em pé, de costas para a sua cidade, carregando um fardo esmagador sobre os ombros e segurando um Livro sagrado nas mãos.</p>
-          <p>Ao abrir o livro, tremeu e chorou em profunda angústia, dizendo: <em>'O que devo fazer para me salvar?'</em>. Foi então que encontrou Evangelista, que lhe apontou uma luz distante sobre a porta estreita. Ali começou a maior caminhada de salvação e perseverança da história da literatura cristã.</p>
-        `
-      },
-      {
-        id: "salmo-23-comentado",
-        category: "teologia",
-        title: "Salmo 23 Explicado Versículo por Versículo",
-        author: "Clássicos da Fé Cristã",
-        cover: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=500&auto=format&fit=crop&q=80",
-        content: `
-          <h2>O Senhor é o Meu Pastor: A Certeza do Cuidado Divino</h2>
-          <div class="devotional-verse">
-            "O Senhor é o meu pastor, nada me faltará. Deitar-me faz em verdes pastos, guia-me mansamente a águas tranquilas." — Salmo 23:1-2
-          </div>
-          <p>Davi era experiente no pastoreio e sabia exatamente como as ovelhas dependem de proteção contra predadores, de remédio para suas feridas e de pastos limpos. Ao afirmar que o Senhor é o seu Pastor, ele reconhece a sua total vulnerabilidade e ao mesmo tempo a sua segurança inabalável.</p>
-          <p>Mesmo quando o caminho nos conduz pelo vale da sombra da morte, a presença de Deus permanece ao nosso lado. A vara e o cajado não ferem a ovelha: a vara afugenta os lobos e o cajado resgata quem se perdeu à beira do abismo.</p>
+          <p>Cristão iniciou sua jornada com um pesado fardo sobre as costas, deixando a Cidade da Destruição para trás em busca da salvação em Cristo. Uma das maiores obras literárias cristãs de todos os tempos, fonte perene de encorajamento para todo líder e crente.</p>
         `
       }
     ];
@@ -826,20 +858,23 @@
     const statusText = document.getElementById("statusText");
     const histCount = document.getElementById("histCount");
 
-    // Elementos Leitor
+    // Modal
     const readerModal = document.getElementById("readerModal");
     const readerWindow = document.getElementById("readerWindow");
     const readerBookTitle = document.getElementById("readerBookTitle");
+    const readerIframe = document.getElementById("readerIframe");
     const readerContentArea = document.getElementById("readerContentArea");
     const closeReaderBtn = document.getElementById("closeReaderBtn");
     const fullscreenBtn = document.getElementById("fullscreenBtn");
     const readerPdfBtn = document.getElementById("readerPdfBtn");
+    const openExternalTabBtn = document.getElementById("openExternalTabBtn");
+    const textControls = document.querySelectorAll(".text-ctrl");
 
     let currentBookReading = null;
     let currentFontSize = 1.25;
 
     // ==========================================
-    // AUTENTICAÇÃO
+    // 1. SISTEMA DE AUTENTICAÇÃO
     // ==========================================
     function checkAuth() {
       if (localStorage.getItem(AUTH_KEY) === "true") {
@@ -880,7 +915,7 @@
     });
 
     // ==========================================
-    // HISTÓRICO
+    // 2. HISTÓRICO DE LEITURAS
     // ==========================================
     function getHistorico() {
       try {
@@ -897,7 +932,9 @@
         title: livro.title,
         author: livro.author,
         cover: livro.cover,
-        content: livro.content,
+        content: livro.content || "",
+        readerUrl: livro.readerUrl || "",
+        pdfUrl: livro.pdfUrl || "",
         timestamp: new Date().toLocaleDateString('pt-BR')
       });
       if (hist.length > 50) hist.pop();
@@ -917,7 +954,7 @@
       const hist = getHistorico();
       if (hist.length === 0) {
         statusIndicator.style.display = "block";
-        statusText.textContent = "O histórico está vazio. Abra qualquer livro para salvá-lo aqui.";
+        statusText.textContent = "O histórico está vazio. Abra qualquer livro para registrá-lo aqui.";
         booksGrid.innerHTML = "";
       } else {
         mostrarLivros(hist);
@@ -925,17 +962,7 @@
     }
 
     // ==========================================
-    // SALVAR / BAIXAR PDF DIRETO NO NAVEGADOR
-    // ==========================================
-    function baixarPdfDireto(livro) {
-      abrirLeitor(livro);
-      setTimeout(() => {
-        window.print(); // Abre a janela oficial do navegador para Salvar em PDF na hora!
-      }, 400);
-    }
-
-    // ==========================================
-    // EXIBIR CARDS
+    // 3. RENDERIZAÇÃO DOS CARDS DE LIVROS
     // ==========================================
     function mostrarLivros(lista) {
       statusIndicator.style.display = "none";
@@ -943,7 +970,7 @@
 
       if (!lista || lista.length === 0) {
         statusIndicator.style.display = "block";
-        statusText.textContent = "Nenhum livro encontrado para esta busca.";
+        statusText.textContent = "Nenhum livro foi encontrado para essa busca. Tente outras palavras-chave.";
         return;
       }
 
@@ -951,30 +978,48 @@
         const card = document.createElement("div");
         card.className = "book-card";
 
+        const badgeText = item.content ? "Texto Próprio" : "Google Books";
+        
+        // Verifica se tem link público de PDF
+        const pdfBtnTitle = item.pdfUrl ? "Baixar PDF Oficial" : "Imprimir / Salvar em PDF";
+
         card.innerHTML = `
           <div class="cover-container">
-            <span class="badge-internal">Leitura Imediata</span>
-            <img src="${item.cover}" alt="${item.title}" class="book-cover" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80'" />
+            <span class="badge-tag">${badgeText}</span>
+            <img 
+              src="${item.cover}" 
+              alt="${item.title}" 
+              class="book-cover" 
+              loading="lazy"
+              onerror="this.onerror=null; this.src='${DEFAULT_COVER}';" 
+            />
           </div>
           <div class="book-details">
             <div>
-              <h3 class="book-title">${item.title}</h3>
-              <p class="book-author">${item.author}</p>
+              <h3 class="book-title" title="${item.title}">${item.title}</h3>
+              <p class="book-author" title="${item.author}">${item.author}</p>
             </div>
             <div class="card-actions">
               <button class="read-button">📖 Ler Livro</button>
-              <button class="pdf-button" title="Salvar PDF no computador/celular">📥 PDF</button>
+              <button class="pdf-button" title="${pdfBtnTitle}">📥 PDF</button>
             </div>
           </div>
         `;
 
+        // Ler Livro
         card.querySelector(".read-button").addEventListener("click", () => {
           abrirLeitor(item);
         });
 
+        // PDF
         card.querySelector(".pdf-button").addEventListener("click", (e) => {
           e.stopPropagation();
-          baixarPdfDireto(item);
+          if (item.pdfUrl) {
+            window.open(item.pdfUrl, "_blank");
+          } else {
+            abrirLeitor(item);
+            setTimeout(() => window.print(), 500);
+          }
         });
 
         booksGrid.appendChild(card);
@@ -982,7 +1027,7 @@
     }
 
     // ==========================================
-    // BUSCA UNIVERSAL ROBUSTA
+    // 4. BUSCA NA API DO GOOGLE BOOKS
     // ==========================================
     async function executarBusca() {
       const termo = searchInput.value.trim();
@@ -992,68 +1037,200 @@
       }
 
       statusIndicator.style.display = "block";
-      statusText.textContent = `Buscando "${termo}" em todos os acervos...`;
+      statusText.textContent = `Pesquisando por "${termo}" no acervo mundial do Google Books...`;
       booksGrid.innerHTML = "";
 
       const termoLower = termo.toLowerCase();
 
-      // 1. Filtra primeiro na biblioteca local
+      // 1. Procura primeiro no acervo local embutido
       const locaisEncontrados = LOCAL_BOOKS.filter(b => 
         b.title.toLowerCase().includes(termoLower) || 
-        b.author.toLowerCase().includes(termoLower) ||
-        (termoLower.includes("familia") && b.category === "familia") ||
-        (termoLower.includes("pao") && b.category === "devocional")
+        b.author.toLowerCase().includes(termoLower)
       );
 
-      // 2. Busca na base de livros do Google Books sem quebrar filtros de idioma
-      let onlineEncontrados = [];
+      // 2. Consulta à API Global do Google Books
+      let googleLivros = [];
       try {
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(termo)}&maxResults=20`;
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(termo)}&maxResults=24`;
         const res = await fetch(url);
+        
+        if (!res.ok) throw new Error("Falha na consulta à API do Google Books.");
+
         const data = await res.json();
 
         if (data.items && data.items.length > 0) {
-          onlineEncontrados = data.items.map(item => {
+          googleLivros = data.items.map(item => {
             const info = item.volumeInfo || {};
-            const desc = info.description 
+            const access = item.accessInfo || {};
+
+            // Prioriza thumbnail com HTTPS
+            let coverUrl = DEFAULT_COVER;
+            if (info.imageLinks) {
+              coverUrl = (info.imageLinks.medium || info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || DEFAULT_COVER)
+                .replace("http://", "https://");
+            }
+
+            // URL do leitor do Google Books
+            let readerUrl = "";
+            if (access.webReaderLink) {
+              readerUrl = access.webReaderLink;
+            } else if (info.previewLink) {
+              readerUrl = info.previewLink.includes("&output=embed") ? info.previewLink : info.previewLink + "&output=embed";
+            }
+
+            // Link de download de PDF se disponível
+            let pdfUrl = "";
+            if (access.pdf && access.pdf.isAvailable && access.pdf.downloadLink) {
+              pdfUrl = access.pdf.downloadLink;
+            }
+
+            const sinopse = info.description 
               ? info.description.replace(/<[^>]*>?/gm, '') 
-              : 'Este volume faz parte do acervo internacional de teologia e literatura cristã.';
+              : 'Prévia e sinopse disponibilizadas pela editora através do catálogo do Google Books.';
 
             return {
               id: item.id,
               title: info.title || "Título Indisponível",
               author: info.authors ? info.authors.join(", ") : "Autor não informado",
-              cover: info.imageLinks && info.imageLinks.thumbnail 
-                ? info.imageLinks.thumbnail.replace("http://", "https://") 
-                : "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
+              cover: coverUrl,
+              readerUrl: readerUrl,
+              pdfUrl: pdfUrl,
               content: `
                 <h2>${info.title}</h2>
-                <p><strong>Autor(es):</strong> ${info.authors ? info.authors.join(", ") : "Não informado"}</p>
-                <p><strong>Publicação:</strong> ${info.publisher || "Acervo de Obras"} ${info.publishedDate ? '(' + info.publishedDate + ')' : ''}</p>
+                <p><strong>Autor(es):</strong> ${info.authors ? info.authors.join(", ") : "Desconhecido"}</p>
+                <p><strong>Editora:</strong> ${info.publisher || "Acervo Geral"} ${info.publishedDate ? '(' + info.publishedDate + ')' : ''}</p>
                 <div class="devotional-verse">
-                  ${desc}
+                  ${sinopse}
                 </div>
-                <p>Este livro foi catalogado pelo sistema global para os estudos do Pastor James. Para imprimir o resumo ou salvar em PDF no seu aparelho, utilize o botão <strong>"📥 Salvar PDF"</strong> na barra superior.</p>
+                <p><em>Este exemplar faz parte do catálogo oficial indexado pelo Google Books. Utilize o botão "↗ Nova Aba" no topo caso deseje ampliar a leitura em tela cheia na plataforma original.</em></p>
               `
             };
           });
         }
-      } catch (e) {
-        console.warn("Busca online indisponível no momento.");
+      } catch (err) {
+        console.warn("Erro ao buscar no Google Books:", err);
       }
 
-      const resultadoFinal = [...locaisEncontrados, ...onlineEncontrados];
+      // Concatena resultados locais com os do Google Books
+      const resultadoFinal = [...locaisEncontrados, ...googleLivros];
 
       if (resultadoFinal.length > 0) {
         mostrarLivros(resultadoFinal);
       } else {
         statusIndicator.style.display = "block";
-        statusText.textContent = `Nenhum livro foi encontrado para "${termo}". Tente palavras como 'Pastor', 'Família', 'Oração' ou 'Spurgeon'.`;
+        statusText.textContent = `Nenhum livro foi encontrado para "${termo}". Tente o nome do autor ou outro termo bíblico/literário.`;
       }
     }
 
     // ==========================================
-    // NAVEGAÇÃO E RESET
+    // 5. LEITOR EMBUTIDO (MODAL INTELIGENTE)
+    // ==========================================
+    function abrirLeitor(livro) {
+      currentBookReading = livro;
+      readerBookTitle.textContent = livro.title;
+
+      // Define se usa iframe do Google Books ou texto formatado
+      if (livro.readerUrl) {
+        readerIframe.src = livro.readerUrl;
+        readerIframe.style.display = "block";
+        readerContentArea.style.display = "none";
+        textControls.forEach(el => el.style.display = "none");
+        openExternalTabBtn.style.display = "inline-block";
+      } else {
+        readerIframe.src = "about:blank";
+        readerIframe.style.display = "none";
+        readerContentArea.innerHTML = livro.content;
+        readerContentArea.style.display = "block";
+        textControls.forEach(el => el.style.display = "inline-block");
+        openExternalTabBtn.style.display = "none";
+      }
+
+      readerModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      salvarNoHistorico(livro);
+    }
+
+    function fecharLeitor() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+      readerIframe.src = "about:blank";
+      readerModal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    closeReaderBtn.addEventListener("click", fecharLeitor);
+    readerModal.addEventListener("click", (e) => {
+      if (e.target === readerModal) fecharLeitor();
+    });
+
+    // Abrir em nova aba caso prefira leitura externa completa
+    openExternalTabBtn.addEventListener("click", () => {
+      if (currentBookReading && currentBookReading.readerUrl) {
+        window.open(currentBookReading.readerUrl, "_blank");
+      }
+    });
+
+    // Salvar em PDF
+    readerPdfBtn.addEventListener("click", () => {
+      if (currentBookReading && currentBookReading.pdfUrl) {
+        window.open(currentBookReading.pdfUrl, "_blank");
+      } else {
+        window.print();
+      }
+    });
+
+    // Alternar Tela Cheia com detecção automática do estado
+    fullscreenBtn.addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        readerModal.requestFullscreen().catch(() => {
+          readerWindow.requestFullscreen().catch(err => {
+            alert("A tela cheia não pôde ser ativada no momento: " + err.message);
+          });
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      if (document.fullscreenElement) {
+        fullscreenBtn.textContent = "⛶ Sair da Tela Cheia";
+      } else {
+        fullscreenBtn.textContent = "⛶ Tela Cheia";
+      }
+    });
+
+    // Ajustes de Fonte (para textos embutidos)
+    document.getElementById("fontIncBtn").addEventListener("click", () => {
+      if (currentFontSize < 2.2) {
+        currentFontSize += 0.15;
+        readerContentArea.style.fontSize = `${currentFontSize}rem`;
+      }
+    });
+
+    document.getElementById("fontDecBtn").addEventListener("click", () => {
+      if (currentFontSize > 0.9) {
+        currentFontSize -= 0.15;
+        readerContentArea.style.fontSize = `${currentFontSize}rem`;
+      }
+    });
+
+    // Temas de Leitura
+    document.getElementById("themeSepiaBtn").addEventListener("click", () => {
+      readerContentArea.className = "reader-content-area theme-sepia";
+    });
+
+    document.getElementById("themeNightBtn").addEventListener("click", () => {
+      readerContentArea.className = "reader-content-area theme-night";
+    });
+
+    document.getElementById("themeLightBtn").addEventListener("click", () => {
+      readerContentArea.className = "reader-content-area";
+    });
+
+    // ==========================================
+    // 6. NAVEGAÇÃO E FILTROS RÁPIDOS
     // ==========================================
     function carregarInicio() {
       searchInput.value = "";
@@ -1072,6 +1249,7 @@
       if (e.key === "Enter") executarBusca();
     });
 
+    // Filtros de Categoria (Dispara busca temática no Google Books se necessário)
     document.querySelectorAll(".filter-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const categoria = btn.dataset.filter;
@@ -1082,98 +1260,25 @@
 
         document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        searchInput.value = "";
 
         if (categoria === "todos") {
+          searchInput.value = "";
           mostrarLivros(LOCAL_BOOKS);
         } else {
-          const filtrados = LOCAL_BOOKS.filter(b => b.category === categoria);
-          mostrarLivros(filtrados);
+          // Preenche a busca e consulta o Google Books pela categoria desejada
+          const termosCategorias = {
+            lideranca: "Liderança Cristã pastoral",
+            familia: "Família e Casamento cristão",
+            devocional: "Devocional Pão Diário oração",
+            teologia: "Teologia e Vida Cristã"
+          };
+          searchInput.value = termosCategorias[categoria] || categoria;
+          executarBusca();
         }
       });
     });
 
-    // ==========================================
-    // LEITOR INTERNO & CORREÇÃO DE TELA CHEIA
-    // ==========================================
-    function abrirLeitor(livro) {
-      currentBookReading = livro;
-      readerBookTitle.textContent = livro.title;
-      readerContentArea.innerHTML = livro.content;
-      readerModal.style.display = "flex";
-      document.body.style.overflow = "hidden";
-      salvarNoHistorico(livro);
-    }
-
-    function fecharLeitor() {
-      if (document.fullscreenElement) {
-        document.exitFullscreen().catch(() => {});
-      }
-      readerModal.style.display = "none";
-      document.body.style.overflow = "auto";
-    }
-
-    closeReaderBtn.addEventListener("click", fecharLeitor);
-    readerModal.addEventListener("click", (e) => {
-      if (e.target === readerModal) fecharLeitor();
-    });
-
-    // Salvar PDF a partir da barra do Leitor
-    readerPdfBtn.addEventListener("click", () => {
-      window.print();
-    });
-
-    // Alternar Tela Cheia com detecção correta de estado
-    fullscreenBtn.addEventListener("click", () => {
-      if (!document.fullscreenElement) {
-        readerModal.requestFullscreen().catch(() => {
-          readerWindow.requestFullscreen().catch(err => {
-            alert("O seu navegador bloqueou a tela cheia: " + err.message);
-          });
-        });
-      } else {
-        document.exitFullscreen();
-      }
-    });
-
-    // Evento nativo para corrigir o texto do botão de tela cheia
-    document.addEventListener("fullscreenchange", () => {
-      if (document.fullscreenElement) {
-        fullscreenBtn.textContent = "⛶ Sair da Tela Cheia";
-      } else {
-        fullscreenBtn.textContent = "⛶ Tela Cheia";
-      }
-    });
-
-    // Ajuste de Tamanho da Fonte
-    document.getElementById("fontIncBtn").addEventListener("click", () => {
-      if (currentFontSize < 2.2) {
-        currentFontSize += 0.15;
-        readerContentArea.style.fontSize = `${currentFontSize}rem`;
-      }
-    });
-
-    document.getElementById("fontDecBtn").addEventListener("click", () => {
-      if (currentFontSize > 0.9) {
-        currentFontSize -= 0.15;
-        readerContentArea.style.fontSize = `${currentFontSize}rem`;
-      }
-    });
-
-    // Temas do Leitor
-    document.getElementById("themeSepiaBtn").addEventListener("click", () => {
-      readerContentArea.className = "reader-content-area theme-sepia";
-    });
-
-    document.getElementById("themeNightBtn").addEventListener("click", () => {
-      readerContentArea.className = "reader-content-area theme-night";
-    });
-
-    document.getElementById("themeLightBtn").addEventListener("click", () => {
-      readerContentArea.className = "reader-content-area";
-    });
-
-    // Iniciar aplicação
+    // Iniciar Sistema
     checkAuth();
   </script>
 </body>
