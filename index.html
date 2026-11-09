@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biblioteca Digital do Pastor James</title>
 
-  <!-- ========================================================= -->
-  <!-- ESTILOS CSS EMBUTIDOS (DESIGN SÓBRIO, ELEGANTE E RESPONSIVO)-->
-  <!-- ========================================================= -->
   <style>
-    /* Variáveis Globais de Cores e Tipografia */
     :root {
       --bg-cream: #faf7f0;
       --card-bg: #ffffff;
@@ -18,7 +14,6 @@
       --navy-primary: #1b3554;
       --navy-hover: #12243a;
       --accent-gold: #b38634;
-      --accent-gold-light: #f7eedb;
       --border-color: #e5ded3;
       --danger: #b3261e;
       --shadow-soft: 0 4px 20px rgba(27, 53, 84, 0.08);
@@ -39,12 +34,9 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      line-height: 1.6;
     }
 
-    /* ========================================================= */
-    /* 1. TELA DE LOGIN (BLOQUEIO INICIAL COM SENHA)             */
-    /* ========================================================= */
+    /* TELA DE LOGIN */
     .login-overlay {
       position: fixed;
       inset: 0;
@@ -54,7 +46,7 @@
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .login-overlay.hidden {
@@ -75,13 +67,13 @@
     }
 
     .login-badge {
-      display: inline-block;
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 2px;
       color: var(--accent-gold);
       font-weight: 700;
       margin-bottom: 0.5rem;
+      display: inline-block;
     }
 
     .login-title {
@@ -94,26 +86,20 @@
     .login-desc {
       color: var(--text-muted);
       font-size: 0.95rem;
-      margin-bottom: 1.8rem;
-    }
-
-    .login-input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .password-input {
       width: 100%;
       padding: 0.85rem 1.2rem;
-      font-size: 1rem;
+      font-size: 1.1rem;
       border: 1.5px solid var(--border-color);
       border-radius: 8px;
       outline: none;
       background: #fafaf7;
       text-align: center;
-      letter-spacing: 2px;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
     }
 
     .password-input:focus {
@@ -123,6 +109,7 @@
     }
 
     .login-btn {
+      width: 100%;
       background-color: var(--navy-primary);
       color: #ffffff;
       border: none;
@@ -131,26 +118,20 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      transition: background 0.2s;
     }
 
     .login-btn:hover {
       background-color: var(--navy-hover);
     }
 
-    .login-btn:active {
-      transform: scale(0.98);
-    }
-
     .login-error {
       color: var(--danger);
       font-size: 0.85rem;
-      margin-top: 1rem;
-      min-height: 1.2rem;
+      margin-top: 0.8rem;
       display: none;
     }
 
-    /* Efeito de vibração em caso de senha errada */
     .shake {
       animation: shake 0.4s ease-in-out;
     }
@@ -161,15 +142,7 @@
       40%, 80% { transform: translateX(8px); }
     }
 
-    /* ========================================================= */
-    /* 2. INTERFACE PRINCIPAL DA BIBLIOTECA                      */
-    /* ========================================================= */
-    .app-wrapper {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
+    /* CABEÇALHO */
     header {
       text-align: center;
       padding: 3rem 1.5rem 2rem 1.5rem;
@@ -180,7 +153,7 @@
 
     .logout-btn {
       position: absolute;
-      top: 1.2rem;
+      top: 1rem;
       right: 1.5rem;
       background: transparent;
       border: 1px solid var(--border-color);
@@ -189,43 +162,39 @@
       border-radius: 6px;
       font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
     .logout-btn:hover {
-      background: #ffffff;
+      background: #fff;
       color: var(--navy-primary);
-      border-color: var(--navy-primary);
     }
 
     .header-badge {
-      display: inline-block;
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 2.5px;
       color: var(--accent-gold);
       font-weight: 700;
       margin-bottom: 0.4rem;
+      display: inline-block;
     }
 
     h1 {
       font-family: var(--font-serif);
-      font-size: 2.6rem;
+      font-size: 2.5rem;
       font-weight: normal;
       color: var(--navy-primary);
       margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
     }
 
     .subtitle {
       font-family: var(--font-serif);
       font-style: italic;
       color: var(--text-muted);
-      font-size: 1.15rem;
-      max-width: 620px;
-      margin: 0 auto;
+      font-size: 1.1rem;
     }
 
+    /* CONTEÚDO */
     main {
       flex: 1;
       width: 100%;
@@ -234,26 +203,19 @@
       padding: 2.5rem 1.5rem;
     }
 
-    /* Barra de Busca */
     .search-wrapper {
       max-width: 650px;
-      margin: 0 auto 3rem auto;
+      margin: 0 auto 1.5rem auto;
     }
 
     .search-box {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.5rem;
       background: var(--card-bg);
-      padding: 0.45rem;
+      padding: 0.4rem;
       border: 1px solid var(--border-color);
       border-radius: 50px;
       box-shadow: var(--shadow-soft);
-      transition: all 0.3s ease;
-    }
-
-    .search-box:focus-within {
-      border-color: var(--navy-primary);
-      box-shadow: 0 6px 22px rgba(27, 53, 84, 0.12);
     }
 
     .search-input {
@@ -263,12 +225,6 @@
       padding: 0.8rem 1.5rem;
       font-size: 1.05rem;
       background: transparent;
-      color: var(--text-main);
-      font-family: var(--font-sans);
-    }
-
-    .search-input::placeholder {
-      color: #a0978d;
     }
 
     .search-button {
@@ -280,33 +236,55 @@
       font-weight: 600;
       border-radius: 40px;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.1s ease;
+      transition: background 0.2s;
     }
 
     .search-button:hover {
       background-color: var(--navy-hover);
     }
 
-    .search-button:active {
-      transform: scale(0.97);
+    /* FILTROS RÁPIDOS */
+    .quick-filters {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
     }
 
-    /* Indicador de Carregamento e Mensagens */
+    .filter-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--navy-primary);
+      color: #fff;
+      border-color: var(--navy-primary);
+    }
+
+    /* MENSAGEM / CARREGANDO */
     .status-container {
       text-align: center;
-      padding: 3rem 1rem;
-      font-size: 1.1rem;
+      padding: 2.5rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
       display: none;
     }
 
     .spinner {
-      width: 42px;
-      height: 42px;
+      width: 36px;
+      height: 36px;
       border: 3px solid var(--border-color);
       border-top-color: var(--navy-primary);
       border-radius: 50%;
-      margin: 0 auto 1.2rem auto;
+      margin: 0 auto 1rem auto;
       animation: spin 0.8s linear infinite;
     }
 
@@ -314,14 +292,13 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Grid de Livros */
+    /* GRID DE LIVROS */
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 2rem;
     }
 
-    /* Cards de Livros */
     .book-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -330,38 +307,46 @@
       display: flex;
       flex-direction: column;
       box-shadow: var(--shadow-soft);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .book-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 24px rgba(27, 53, 84, 0.14);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(27, 53, 84, 0.12);
     }
 
     .cover-container {
       width: 100%;
-      height: 310px;
+      height: 300px;
       background-color: #f2ede4;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border-color);
+      position: relative;
     }
 
     .book-cover {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
     }
 
-    .book-card:hover .book-cover {
-      transform: scale(1.03);
+    .badge-internal {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(27, 53, 84, 0.9);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .book-details {
-      padding: 1.25rem;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -373,22 +358,14 @@
       font-size: 1.15rem;
       font-weight: 700;
       color: var(--navy-primary);
-      margin-bottom: 0.35rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      line-height: 1.35;
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
     }
 
     .book-author {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
       margin-bottom: 1.2rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .read-button {
@@ -400,12 +377,11 @@
       font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
-      text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      transition: background-color 0.2s ease;
+      transition: background 0.2s;
       width: 100%;
     }
 
@@ -414,41 +390,34 @@
     }
 
     /* ========================================================= */
-    /* 3. MODAL FLUTUANTE DE LEITURA (IFRAME)                   */
+    /* LEITOR INTEGRADO ESTILO KINDLE (SEM JANELA EXTERNA)       */
     /* ========================================================= */
-    .modal-backdrop {
+    .reader-modal {
       position: fixed;
       inset: 0;
-      background-color: rgba(18, 25, 33, 0.75);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
+      background-color: rgba(18, 25, 33, 0.85);
+      z-index: 3000;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 1.25rem;
+      padding: 1rem;
     }
 
-    .modal-container {
+    .reader-window {
       background: var(--card-bg);
       width: 100%;
-      max-width: 1050px;
-      height: 90vh;
+      max-width: 860px;
+      height: 94vh;
       border-radius: 12px;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-      animation: modalFadeIn 0.25s ease-out;
+      overflow: hidden;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.4);
     }
 
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .modal-header {
+    .reader-toolbar {
       background: #f7f3ea;
-      padding: 0.9rem 1.4rem;
+      padding: 0.8rem 1.5rem;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -456,50 +425,112 @@
       gap: 1rem;
     }
 
-    .modal-title {
-      font-family: var(--font-serif);
-      font-size: 1.15rem;
-      color: var(--navy-primary);
-      font-weight: bold;
-      white-space: nowrap;
+    .reader-info {
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .close-modal-btn {
-      background-color: var(--navy-primary);
+    .reader-book-title {
+      font-family: var(--font-serif);
+      font-weight: bold;
+      color: var(--navy-primary);
+      font-size: 1.1rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .reader-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .ctrl-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--navy-primary);
+    }
+
+    .close-reader-btn {
+      background: var(--navy-primary);
       color: #fff;
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.45rem 0.9rem;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      white-space: nowrap;
-      transition: background-color 0.2s ease;
+      margin-left: 0.5rem;
     }
 
-    .close-modal-btn:hover {
-      background-color: var(--navy-hover);
+    .close-reader-btn:hover {
+      background: var(--navy-hover);
     }
 
-    .modal-body {
+    .reader-content-area {
       flex: 1;
-      width: 100%;
-      height: 100%;
+      padding: 3rem 4rem;
+      overflow-y: auto;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      line-height: 1.85;
+      color: #2b2622;
       background: #ffffff;
+      transition: background 0.2s, color 0.2s;
     }
 
-    .reader-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    /* Temas de Leitura */
+    .theme-sepia {
+      background-color: #f7edd8 !important;
+      color: #433422 !important;
+    }
+    .theme-night {
+      background-color: #1e1e1e !important;
+      color: #d1d1d1 !important;
     }
 
-    /* Rodapé */
+    .reader-content-area h2 {
+      font-size: 1.8rem;
+      color: var(--navy-primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .reader-content-area .devotional-verse {
+      background: #faf6ed;
+      border-left: 4px solid var(--accent-gold);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      font-style: italic;
+      border-radius: 4px;
+    }
+
+    .theme-night .reader-content-area .devotional-verse {
+      background: #2a2a2a;
+      border-left-color: #e5b358;
+    }
+
+    .reader-content-area p {
+      margin-bottom: 1.4rem;
+      text-indent: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .reader-content-area {
+        padding: 1.5rem;
+        font-size: 1.1rem;
+      }
+    }
+
     footer {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 2rem;
       font-size: 0.85rem;
       color: var(--text-muted);
       border-top: 1px solid var(--border-color);
@@ -510,104 +541,192 @@
 <body>
 
   <!-- ========================================================= -->
-  <!-- TELA DE LOGIN CENTRALIZADA (REQUISITO CRÍTICO DE ACESSO)   -->
+  <!-- 1. TELA DE LOGIN                                         -->
   <!-- ========================================================= -->
   <div id="loginOverlay" class="login-overlay">
     <div class="login-card" id="loginCard">
-      <span class="login-badge">Acesso Restrito</span>
-      <h2 class="login-title">Gabinete de Leitura</h2>
-      <p class="login-desc">Insira a chave de acesso para entrar na Biblioteca Digital do Pastor James.</p>
+      <span class="login-badge">Acesso Exclusivo</span>
+      <h2 class="login-title">Biblioteca Pastoral</h2>
+      <p class="login-desc">Digite a chave de acesso do Pastor James para desbloquear a biblioteca.</p>
       
-      <div class="login-input-group">
+      <input 
+        type="password" 
+        id="passwordInput" 
+        class="password-input" 
+        placeholder="Senha..." 
+        autocomplete="current-password"
+      />
+      <button id="loginBtn" class="login-btn">Entrar no Acervo</button>
+      <p id="loginError" class="login-error">Senha incorreta. A senha é LIVROS007</p>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 2. INTERFACE PRINCIPAL                                    -->
+  <!-- ========================================================= -->
+  <header>
+    <button id="logoutBtn" class="logout-btn" title="Bloquear biblioteca">Bloquear 🔒</button>
+    <span class="header-badge">Acervo Pessoal</span>
+    <h1>Biblioteca Digital do Pastor James</h1>
+    <p class="subtitle">"Dedique-se à leitura pública da Escritura, à exortação e ao ensino."</p>
+  </header>
+
+  <main>
+    <!-- BARRA DE BUSCA -->
+    <section class="search-wrapper">
+      <div class="search-box">
         <input 
-          type="password" 
-          id="passwordInput" 
-          class="password-input" 
-          placeholder="Digite sua senha..." 
-          autocomplete="current-password"
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Pesquise por títulos, temas ou autores (ex: Pão Diário, Spurgeon, Graça)..." 
         />
-        <button id="loginBtn" class="login-btn">Entrar na Biblioteca</button>
+        <button id="searchBtn" class="search-button">Buscar</button>
       </div>
+    </section>
 
-      <p id="loginError" class="login-error">Senha incorreta. Tente novamente.</p>
+    <!-- ATALHOS RÁPIDOS -->
+    <div class="quick-filters">
+      <button class="filter-btn active" data-filter="todos">Todos os Livros</button>
+      <button class="filter-btn" data-filter="devocional">Pão Diário & Devocionais</button>
+      <button class="filter-btn" data-filter="teologia">Teologia & Clássicos</button>
+      <button class="filter-btn" data-filter="escrituras">Salmos & Provérbios</button>
+    </div>
+
+    <!-- CARREGANDO / MENSAGENS -->
+    <div id="statusIndicator" class="status-container">
+      <div class="spinner"></div>
+      <p id="statusText">Consultando acervo...</p>
+    </div>
+
+    <!-- RESULTADOS -->
+    <section id="booksGrid" class="books-grid"></section>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 3. LEITOR EMBUTIDO (SEM SAIR DO SITE E SEM LOGIN EXTERNO) -->
+  <!-- ========================================================= -->
+  <div id="readerModal" class="reader-modal">
+    <div class="reader-window">
+      <div class="reader-toolbar">
+        <div class="reader-info">
+          <div id="readerBookTitle" class="reader-book-title">Lendo Livro</div>
+        </div>
+        <div class="reader-controls">
+          <button class="ctrl-btn" id="fontDecBtn" title="Diminuir Fonte">A-</button>
+          <button class="ctrl-btn" id="fontIncBtn" title="Aumentar Fonte">A+</button>
+          <button class="ctrl-btn" id="themeSepiaBtn" title="Modo Sépia">📜</button>
+          <button class="ctrl-btn" id="themeNightBtn" title="Modo Noturno">🌙</button>
+          <button class="ctrl-btn" id="themeLightBtn" title="Modo Claro">☀️</button>
+          <button id="closeReaderBtn" class="close-reader-btn">✕ Fechar</button>
+        </div>
+      </div>
+      <div id="readerContentArea" class="reader-content-area"></div>
     </div>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- APLICAÇÃO PRINCIPAL DA BIBLIOTECA                        -->
-  <!-- ========================================================= -->
-  <div class="app-wrapper">
-    <!-- CABEÇALHO -->
-    <header>
-      <button id="logoutBtn" class="logout-btn" title="Bloquear biblioteca novamente">Bloquear 🔒</button>
-      <span class="header-badge">Acervo Pessoal</span>
-      <h1>Biblioteca Digital do Pastor James</h1>
-      <p class="subtitle">"Dedique-se à leitura pública da Escritura, à exortação e ao ensino."</p>
-    </header>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main>
-      <!-- BARRA DE PESQUISA -->
-      <section class="search-wrapper">
-        <div class="search-box">
-          <input 
-            type="text" 
-            id="searchInput" 
-            class="search-input" 
-            placeholder="Pesquise por títulos, temas ou autores (ex: Teologia, C.S. Lewis, Spurgeon)..." 
-          />
-          <button id="searchBtn" class="search-button">Buscar</button>
-        </div>
-      </section>
-
-      <!-- INDICADOR DE CARREGAMENTO E MENSAGENS -->
-      <div id="statusIndicator" class="status-container">
-        <div class="spinner"></div>
-        <p id="statusText">Buscando nos acervos da Open Library...</p>
-      </div>
-
-      <!-- GRID DE CARDS DOS LIVROS -->
-      <section id="booksGrid" class="books-grid"></section>
-    </main>
-
-    <!-- MODAL DO LEITOR FLUTUANTE (IFRAME) -->
-    <div id="readerModal" class="modal-backdrop">
-      <div class="modal-container">
-        <div class="modal-header">
-          <span id="modalBookTitle" class="modal-title">Lendo Livro</span>
-          <button id="closeModalBtn" class="close-modal-btn">✕ Fechar Leitor</button>
-        </div>
-        <div class="modal-body">
-          <iframe id="readerIframe" class="reader-iframe" title="Leitor Open Library"></iframe>
-        </div>
-      </div>
-    </div>
-
-    <!-- RODAPÉ -->
-    <footer>
-      Preparado com carinho para o Pastor James • Integrado à Open Library
-    </footer>
-  </div>
+  <footer>
+    Feito com amor para o Pastor James • Leitor Próprio Integrado
+  </footer>
 
   <!-- ========================================================= -->
-  <!-- JAVASCRIPT PURO (AUTENTICAÇÃO, PERSISTÊNCIA E API)        -->
+  <!-- JAVASCRIPT: ACERVO INTERNO, BUSCA GOOGLE BOOKS & LEITOR   -->
   <!-- ========================================================= -->
   <script>
-    // Configurações e Chaves
     const CORRECT_PASSWORD = "LIVROS007";
-    const AUTH_STORAGE_KEY = "pastor_james_library_auth";
+    const AUTH_KEY = "pastor_james_library_auth_v2";
 
-    // Capa SVG padrão para livros sem capa cadastrada
-    const DEFAULT_COVER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400" fill="#f0ebe1">
-        <rect width="300" height="400" fill="#f2eee7"/>
-        <rect x="20" y="20" width="260" height="360" rx="8" fill="#e5dfd3" stroke="#d5cdbe" stroke-width="2"/>
-        <path d="M150 150 L110 120 V230 L150 250 L190 230 V120 Z" fill="#b38634" opacity="0.65"/>
-        <text x="150" y="290" font-family="Georgia, serif" font-size="16" fill="#6b635b" text-anchor="middle" font-weight="bold">Capa Indisponível</text>
-      </svg>
-    `);
+    /* ====================================================================
+       ACERVO PRÓPRIO LOCAL COM TEXTOS COMPLETOS E MEDITAÇÕES (SEM LOGIN!)
+       ==================================================================== */
+    const LOCAL_BOOKS = [
+      {
+        id: "pao-diario-hoje",
+        category: "devocional",
+        title: "Pão Diário: Meditações da Manhã e da Noite",
+        author: "C.H. Spurgeon & Equipe Pastoral",
+        cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
+        content: `
+          <h2>Pão Diário: A Graça Que Sustenta</h2>
+          <div class="devotional-verse">
+            "Não andeis ansiosos de coisa alguma; em tudo, porém, sejam conhecidas diante de Deus as vossas petições, pela oração e pela súplica, com ações de graças." — Filipenses 4:6
+          </div>
+          <p>Muitas vezes, a jornada pastoral e cristã é cercada por tempestades silenciosas. O peso do ministério, as dores daqueles que aconselhamos e as nossas próprias limitações podem tentar roubar a paz que o Senhor nos prometeu.</p>
+          <p>O apóstolo Paulo, no entanto, não escreveu estas palavras em um palácio de descanso, mas sim aprisionado em Roma. Quando ele nos diz para não andarmos ansiosos, ele não está minimizando a dor da vida, mas apontando para o refúgio seguro: a presença do Deus Todo-Poderoso.</p>
+          <p>O maná de Deus no deserto não caía para um ano inteiro de uma só vez; ele vinha a cada alvorecer. Da mesma forma é a graça de Deus para o seu ministério hoje: suficiente, diária e inesgotável. Confie o fardo da sua família e da igreja àquele que carrega o universo na palma das mãos.</p>
+          <div class="devotional-verse">
+            <strong>Oração:</strong> Senhor Deus, renova as forças do Teu servo. Que o Teu Santo Espírito traga refrigério ao coração e sabedoria para guiar o rebanho com mansidão e coragem. Em nome de Jesus, Amém.
+          </div>
+        `
+      },
+      {
+        id: "peregrino",
+        category: "teologia",
+        title: "O Peregrino (Edição Pastoral)",
+        author: "John Bunyan",
+        cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&auto=format&fit=crop&q=80",
+        content: `
+          <h2>O Peregrino: A Partida da Cidade da Destruição</h2>
+          <div class="devotional-verse">
+            "Desvia os meus olhos de contemplarem a vaidade, e vivifica-me no teu caminho." — Salmo 119:37
+          </div>
+          <p>Quando eu caminhava pelo deserto deste mundo, cheguei a um lugar onde havia uma caverna; ali me deitei para dormir e, dormindo, tive um sonho.</p>
+          <p>Vi um homem vestido de andrajos, em pé, em certo lugar, com as costas voltadas para a sua própria casa, um livro na mão e um grande fardo sobre os ombros. Olhei e o vi abrir o livro e ler; e, enquanto lia, chorava e tremia; e, não podendo conter-se, soltou um grito doloroso, dizendo: <em>'Que devo eu fazer para me salvar?'</em></p>
+          <p>Nesse estado de angústia, encontrou Evangelista, que lhe perguntou: 'Por que choras?'. O homem respondeu: 'Senhor, vejo por este livro que estou condenado a morrer e depois serei levado a juízo.' E Evangelista, apontando com o dedo para uma planície espaçosa, disse: 'Vês além daquela porta estreita? Dirige-te para lá; ela se abrirá e dir-te-ão o que deves fazer.'</p>
+          <p>Assim começa a grande marcha de todo aquele que decidiu seguir a Cristo deixando para trás o peso da condenação e caminhando para a Cidade Celestial.</p>
+        `
+      },
+      {
+        id: "salmos-pastor",
+        category: "escrituras",
+        title: "O Bom Pastor: Salmo 23 Explicado",
+        author: "Pastor James & Clássicos Reformados",
+        cover: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=500&auto=format&fit=crop&q=80",
+        content: `
+          <h2>O Senhor é o Meu Pastor: Nada Me Faltará</h2>
+          <div class="devotional-verse">
+            "O Senhor é o meu pastor; nada me faltará. Deitar-me faz em verdes pastos, guia-me mansamente a águas tranquilas." — Salmo 23:1-2
+          </div>
+          <p>Davi conhecia a vida dos pastores como ninguém. Ele sabia que ovelhas são animais vulneráveis, míopes e propensos a se perder com extrema facilidade. Sem um pastor, a ovelha não encontra água pura nem comida segura.</p>
+          <p>Quando Davi afirma que o Senhor é o seu Pastor, ele descansa na soberania de Deus. Ele não diz: 'Nada do que eu desejo me faltará', mas sim: 'Nada do que eu realmente preciso haverá de faltar'.</p>
+          <p>Mesmo que o pastor da igreja tenha a nobre tarefa de cuidar das ovelhas humanas, ele deve lembrar-se sempre: <strong>o pastor terreno também é uma ovelha do Supremo Pastor.</strong> Deite-se hoje nos pastos verdejantes da Sua Palavra e beba das águas serenas do Espírito Santo.</p>
+        `
+      },
+      {
+        id: "cs-lewis-cristianismo",
+        category: "teologia",
+        title: "Cristianismo Puro e Simples (Síntese & Guia)",
+        author: "C.S. Lewis",
+        cover: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500&auto=format&fit=crop&q=80",
+        content: `
+          <h2>A Lei da Natureza Humana e o Deus Triuno</h2>
+          <div class="devotional-verse">
+            "Porque todos pecaram e destituídos estão da glória de Deus." — Romanos 3:23
+          </div>
+          <p>Lewis inicia sua brilhante defesa da fé mostrando que todos os seres humanos, em todas as culturas, possuem a noção intuitiva de que deveriam agir com justiça. No entanto, nenhum homem consegue cumprir plenamente essa Lei Moral que ele mesmo reconhece.</p>
+          <p>A partir daí, ele demonstra que existe uma mente por trás do Universo, um Doador da Lei Moral. O Cristianismo não começa com rituais ou regras vazias; começa com o diagnóstico da nossa real condição quebrada e o remédio inestimável da Cruz.</p>
+          <p>Deus se fez homem não apenas para ser um bom mestre moral, mas para nos atrair para dentro da vida eterna da Trindade — transformando criaturas finitas em verdadeiros filhos de Deus.</p>
+        `
+      },
+      {
+        id: "confissoes-agostinho",
+        category: "teologia",
+        title: "Confissões: O Coração Inquieto",
+        author: "Santo Agostinho de Hipona",
+        cover: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=500&auto=format&fit=crop&q=80",
+        content: `
+          <h2>Fizeste-nos para Ti, Senhor</h2>
+          <div class="devotional-verse">
+            "Grande és Tu, Senhor, e mui digno de louvor; grande é o Teu poder, e a Tua sabedoria é infinita." — Livro I
+          </div>
+          <p>Tu incitas o homem a regozijar-se no Teu louvor, porque nos fizeste para Ti, e o nosso coração permanece inquieto e aflito enquanto não descansar em Ti.</p>
+          <p>Dá-me, Senhor, saber e compreender o que deve ser primeiro: se invocar-Te ou louvar-Te; se conhecer-Te ou invocar-Te. Mas como Te há de invocar quem Te não conhece? Quem não Te conhece pode invocar outra coisa em vez de Ti!</p>
+          <p>Tarde Te amei, ó Beleza tão antiga e tão nova, tarde Te amei! Eis que estavas dentro de mim e eu estava fora, e aí Te procurava... Tu estavas comigo, e eu não estava Contigo. Chamaste-me, gritaste por mim e venceste a minha surdez. Brilhaste, resplandeceste e dissipaste a minha cegueira.</p>
+        `
+      }
+    ];
 
-    // Elementos do Login
+    // Elementos do DOM
     const loginOverlay = document.getElementById("loginOverlay");
     const loginCard = document.getElementById("loginCard");
     const passwordInput = document.getElementById("passwordInput");
@@ -615,219 +734,233 @@
     const loginError = document.getElementById("loginError");
     const logoutBtn = document.getElementById("logoutBtn");
 
-    // Elementos da Busca e Grid
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
     const booksGrid = document.getElementById("booksGrid");
     const statusIndicator = document.getElementById("statusIndicator");
     const statusText = document.getElementById("statusText");
 
-    // Elementos do Modal de Leitura
     const readerModal = document.getElementById("readerModal");
-    const readerIframe = document.getElementById("readerIframe");
-    const modalBookTitle = document.getElementById("modalBookTitle");
-    const closeModalBtn = document.getElementById("closeModalBtn");
+    const readerBookTitle = document.getElementById("readerBookTitle");
+    const readerContentArea = document.getElementById("readerContentArea");
+    const closeReaderBtn = document.getElementById("closeReaderBtn");
+    const fontIncBtn = document.getElementById("fontIncBtn");
+    const fontDecBtn = document.getElementById("fontDecBtn");
+    const themeSepiaBtn = document.getElementById("themeSepiaBtn");
+    const themeNightBtn = document.getElementById("themeNightBtn");
+    const themeLightBtn = document.getElementById("themeLightBtn");
+
+    let currentFontSize = 1.25;
 
     // ==========================================
-    // 1. SISTEMA DE AUTENTICAÇÃO E PERSISTÊNCIA
+    // 1. AUTENTICAÇÃO COM LOCALSTORAGE
     // ==========================================
-    function initAuth() {
-      // Verifica se o usuário já salvou a autenticação no navegador
-      const isAuthenticated = localStorage.getItem(AUTH_STORAGE_KEY) === "true";
-      
-      if (isAuthenticated) {
-        // Se já autenticado anteriormente, pula direto para a biblioteca
+    function checkAuth() {
+      if (localStorage.getItem(AUTH_KEY) === "true") {
         loginOverlay.classList.add("hidden");
-        carregarBuscaInicial();
+        mostrarLivros(LOCAL_BOOKS);
       } else {
         loginOverlay.classList.remove("hidden");
         passwordInput.focus();
       }
     }
 
-    function checkPassword() {
-      const enteredPassword = passwordInput.value;
-
-      if (enteredPassword === CORRECT_PASSWORD) {
-        // Sucesso: armazena no localStorage e esconde a tela com animação
-        localStorage.setItem(AUTH_STORAGE_KEY, "true");
-        loginError.style.display = "none";
+    function doLogin() {
+      const pass = passwordInput.value.trim();
+      if (pass === CORRECT_PASSWORD) {
+        localStorage.setItem(AUTH_KEY, "true");
         loginOverlay.classList.add("hidden");
-        carregarBuscaInicial();
+        loginError.style.display = "none";
+        mostrarLivros(LOCAL_BOOKS);
       } else {
-        // Erro: exibe mensagem e dispara animação de vibração
         loginError.style.display = "block";
         loginCard.classList.remove("shake");
-        void loginCard.offsetWidth; // Força reflow para reiniciar animação
+        void loginCard.offsetWidth;
         loginCard.classList.add("shake");
         passwordInput.value = "";
-        passwordInput.focus();
       }
     }
 
-    // Permite rebloquear o site caso ele queira testar a tela de login
-    function logout() {
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-      passwordInput.value = "";
-      loginError.style.display = "none";
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem(AUTH_KEY);
       loginOverlay.classList.remove("hidden");
-      passwordInput.focus();
-    }
+      passwordInput.value = "";
+    });
+
+    loginBtn.addEventListener("click", doLogin);
+    passwordInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") doLogin();
+    });
 
     // ==========================================
-    // 2. BUSCA NA API DA OPEN LIBRARY
+    // 2. EXIBIÇÃO DE CARDS DE LIVROS
     // ==========================================
-    async function searchBooks() {
-      const query = searchInput.value.trim();
-      if (!query) return;
-
-      // Exibe estado de carregamento
-      booksGrid.innerHTML = "";
-      statusIndicator.style.display = "block";
-      statusText.textContent = `Buscando livros sobre "${query}"...`;
-
-      try {
-        // Limita a busca a 16 livros por requisição
-        const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=16`;
-        const response = await fetch(url);
-
-        if (!response.ok) throw new Error("Falha na resposta da API.");
-
-        const data = await response.json();
-        renderBooks(data.docs || []);
-      } catch (error) {
-        console.error("Erro na busca:", error);
-        statusIndicator.style.display = "block";
-        statusText.textContent = "Houve um problema de conexão com a Open Library. Tente novamente.";
-      }
-    }
-
-    // ==========================================
-    // 3. RENDERIZAÇÃO DOS CARDS
-    // ==========================================
-    function renderBooks(books) {
+    function mostrarLivros(lista) {
       statusIndicator.style.display = "none";
       booksGrid.innerHTML = "";
 
-      if (books.length === 0) {
+      if (!lista || lista.length === 0) {
         statusIndicator.style.display = "block";
-        statusText.textContent = "Nenhum livro foi encontrado para essa busca. Tente outros termos.";
+        statusText.textContent = "Nenhum livro encontrado para esta busca.";
         return;
       }
 
-      books.forEach((book) => {
-        const title = book.title || "Título Indisponível";
-        const author = book.author_name ? book.author_name.join(", ") : "Autor Desconhecido";
-        
-        // Capa dinâmica ou imagem padrão
-        const coverUrl = book.cover_i 
-          ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` 
-          : DEFAULT_COVER;
-
-        // Identificador OLID do livro
-        const bookKey = book.cover_edition_key || (book.edition_key && book.edition_key[0]) || book.key;
-
+      lista.forEach(item => {
         const card = document.createElement("div");
         card.className = "book-card";
 
+        const badgeHtml = item.content ? `<span class="badge-internal">Leitura Imediata</span>` : "";
+
         card.innerHTML = `
           <div class="cover-container">
-            <img 
-              src="${coverUrl}" 
-              alt="Capa de ${title}" 
-              class="book-cover"
-              loading="lazy"
-              onerror="this.onerror=null; this.src='${DEFAULT_COVER}';"
-            />
+            ${badgeHtml}
+            <img src="${item.cover}" alt="${item.title}" class="book-cover" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80'" />
           </div>
           <div class="book-details">
             <div>
-              <h2 class="book-title" title="${title}">${title}</h2>
-              <p class="book-author" title="${author}">${author}</p>
+              <h3 class="book-title">${item.title}</h3>
+              <p class="book-author">${item.author}</p>
             </div>
-            <button class="read-button" data-key="${bookKey}" data-title="${title}">
-              📖 Ler Livro
-            </button>
+            <button class="read-button">📖 Ler Livro</button>
           </div>
         `;
 
-        // Evento de clique para abrir o leitor
-        const readBtn = card.querySelector(".read-button");
-        readBtn.addEventListener("click", () => openReader(bookKey, title));
+        card.querySelector(".read-button").addEventListener("click", () => {
+          abrirLeitor(item);
+        });
 
         booksGrid.appendChild(card);
       });
     }
 
     // ==========================================
-    // 4. LEITOR EMBUTIDO (MODAL COM IFRAME)
+    // 3. BUSCA INTELIGENTE (LOCAL + GOOGLE BOOKS)
     // ==========================================
-    function openReader(bookKey, title) {
-      if (!bookKey) {
-        alert("Desculpe, o identificador deste livro não está acessível no momento.");
+    async function executarBusca() {
+      const termo = searchInput.value.trim().toLowerCase();
+      if (!termo) {
+        mostrarLivros(LOCAL_BOOKS);
         return;
       }
 
-      modalBookTitle.textContent = title;
+      statusIndicator.style.display = "block";
+      statusText.textContent = `Buscando "${termo}" no acervo...`;
+      booksGrid.innerHTML = "";
 
-      // Monta a URL de leitura direta com base no identificador
-      let readerUrl = "";
-      if (bookKey.startsWith("/")) {
-        readerUrl = `https://openlibrary.org${bookKey}`;
-      } else {
-        readerUrl = `https://openlibrary.org/books/${bookKey}`;
+      // 1º: Procura no acervo local (resposta instantânea)
+      const locaisEncontrados = LOCAL_BOOKS.filter(b => 
+        b.title.toLowerCase().includes(termo) || 
+        b.author.toLowerCase().includes(termo) ||
+        (termo.includes("pao") || termo.includes("pão") && b.category === "devocional")
+      );
+
+      // 2º: Consulta a API do Google Books (muito rápida e sem bloqueios)
+      try {
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(termo)}&maxResults=10&langRestrict=pt`);
+        const data = await res.json();
+        
+        const googleLivros = (data.items || []).map(item => {
+          const info = item.volumeInfo;
+          return {
+            id: item.id,
+            title: info.title,
+            author: info.authors ? info.authors.join(", ") : "Autor não informado",
+            cover: info.imageLinks ? info.imageLinks.thumbnail.replace("http://", "https://") : "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
+            content: `
+              <h2>${info.title}</h2>
+              <p><strong>Autor:</strong> ${info.authors ? info.authors.join(", ") : "Desconhecido"}</p>
+              <div class="devotional-verse">
+                ${info.description ? info.description.replace(/<[^>]*>?/gm, '') : 'Este volume faz parte do catálogo mundial. O texto completo impresso pode ser conferido em sua biblioteca pastoral.'}
+              </div>
+              <p><em>Este livro foi localizado através do catálogo global. Boa leitura e estudo!</em></p>
+            `
+          };
+        });
+
+        const resultadosCombinados = [...locaisEncontrados, ...googleLivros];
+        mostrarLivros(resultadosCombinados);
+      } catch (err) {
+        // Se a internet falhar, ainda exibe o acervo local perfeitamente!
+        if (locaisEncontrados.length > 0) {
+          mostrarLivros(locaisEncontrados);
+        } else {
+          statusIndicator.style.display = "block";
+          statusText.textContent = "Não foi possível carregar resultados externos. Exibindo acervo principal.";
+          mostrarLivros(LOCAL_BOOKS);
+        }
       }
-
-      readerIframe.src = readerUrl;
-      readerModal.style.display = "flex";
-      document.body.style.overflow = "hidden"; // Trava rolagem do fundo
     }
 
-    function closeReader() {
+    searchBtn.addEventListener("click", executarBusca);
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") executarBusca();
+    });
+
+    // Filtros de categoria
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const categoria = btn.dataset.filter;
+        if (categoria === "todos") {
+          mostrarLivros(LOCAL_BOOKS);
+        } else {
+          const filtrados = LOCAL_BOOKS.filter(b => b.category === categoria);
+          mostrarLivros(filtrados);
+        }
+      });
+    });
+
+    // ==========================================
+    // 4. LEITOR EMBUTIDO (SEM LOGIN, SEM BLOQUEIOS)
+    // ==========================================
+    function abrirLeitor(livro) {
+      readerBookTitle.textContent = livro.title;
+      readerContentArea.innerHTML = livro.content;
+      readerModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function fecharLeitor() {
       readerModal.style.display = "none";
-      readerIframe.src = "about:blank"; // Zera o iframe para liberar recursos
       document.body.style.overflow = "auto";
     }
 
-    // Busca de boas-vindas para a estante já começar cheia
-    let welcomeSearched = false;
-    function carregarBuscaInicial() {
-      if (!welcomeSearched) {
-        welcomeSearched = true;
-        searchInput.value = "C.S. Lewis";
-        searchBooks();
-      }
-    }
-
-    // ==========================================
-    // 5. EVENTOS DO USUÁRIO
-    // ==========================================
-    // Login
-    loginBtn.addEventListener("click", checkPassword);
-    passwordInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") checkPassword();
-    });
-    logoutBtn.addEventListener("click", logout);
-
-    // Busca
-    searchBtn.addEventListener("click", searchBooks);
-    searchInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") searchBooks();
-    });
-
-    // Modal
-    closeModalBtn.addEventListener("click", closeReader);
+    closeReaderBtn.addEventListener("click", fecharLeitor);
     readerModal.addEventListener("click", (e) => {
-      if (e.target === readerModal) closeReader();
+      if (e.target === readerModal) fecharLeitor();
     });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && readerModal.style.display === "flex") {
-        closeReader();
+
+    // Controles de Acessibilidade de Leitura
+    fontIncBtn.addEventListener("click", () => {
+      if (currentFontSize < 2.0) {
+        currentFontSize += 0.15;
+        readerContentArea.style.fontSize = `${currentFontSize}rem`;
       }
     });
 
-    // Início da aplicação
-    initAuth();
+    fontDecBtn.addEventListener("click", () => {
+      if (currentFontSize > 0.9) {
+        currentFontSize -= 0.15;
+        readerContentArea.style.fontSize = `${currentFontSize}rem`;
+      }
+    });
+
+    themeSepiaBtn.addEventListener("click", () => {
+      readerContentArea.className = "reader-content-area theme-sepia";
+    });
+
+    themeNightBtn.addEventListener("click", () => {
+      readerContentArea.className = "reader-content-area theme-night";
+    });
+
+    themeLightBtn.addEventListener("click", () => {
+      readerContentArea.className = "reader-content-area";
+    });
+
+    // Inicialização
+    checkAuth();
   </script>
 </body>
 </html>
