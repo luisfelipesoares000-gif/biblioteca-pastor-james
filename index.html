@@ -36,9 +36,7 @@
       flex-direction: column;
     }
 
-    /* ========================================= */
-    /* 1. TELA DE LOGIN (SENHA: LIVROS007)       */
-    /* ========================================= */
+    /* TELA DE LOGIN */
     .login-overlay {
       position: fixed;
       inset: 0;
@@ -144,9 +142,7 @@
       40%, 80% { transform: translateX(8px); }
     }
 
-    /* ========================================= */
-    /* 2. CABEÇALHO E NAVEGAÇÃO                  */
-    /* ========================================= */
+    /* CABEÇALHO */
     header {
       text-align: center;
       padding: 3rem 1.5rem 2rem 1.5rem;
@@ -210,9 +206,7 @@
       font-size: 1.1rem;
     }
 
-    /* ========================================= */
-    /* 3. CONTEÚDO, BUSCA E FILTROS              */
-    /* ========================================= */
+    /* ÁREA PRINCIPAL */
     main {
       flex: 1;
       width: 100%;
@@ -222,7 +216,7 @@
     }
 
     .search-wrapper {
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto 1.5rem auto;
       display: flex;
       gap: 0.5rem;
@@ -307,7 +301,6 @@
       border-color: var(--navy-primary);
     }
 
-    /* STATUS / CARREGANDO */
     .status-container {
       text-align: center;
       padding: 2.5rem;
@@ -330,7 +323,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* GRID DE CARDS */
+    /* GRID DE LIVROS */
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -355,7 +348,7 @@
 
     .cover-container {
       width: 100%;
-      height: 300px;
+      height: 290px;
       background-color: #f2ede4;
       display: flex;
       align-items: center;
@@ -375,11 +368,12 @@
       left: 10px;
       background: rgba(27, 53, 84, 0.9);
       color: #fff;
-      padding: 0.2rem 0.6rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 4px;
       font-size: 0.7rem;
       font-weight: bold;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .book-details {
@@ -405,7 +399,6 @@
       margin-bottom: 1.2rem;
     }
 
-    /* BOTÕES DO CARD: LER + BAIXAR PDF */
     .card-actions {
       display: flex;
       gap: 0.5rem;
@@ -444,7 +437,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.2rem;
+      gap: 0.3rem;
       transition: all 0.2s;
     }
 
@@ -454,7 +447,7 @@
     }
 
     /* ========================================= */
-    /* 4. LEITOR EMBUTIDO (COM TELA CHEIA)       */
+    /* LEITOR EMBUTIDO (FIXED & FULLSCREEN)      */
     /* ========================================= */
     .reader-modal {
       position: fixed;
@@ -477,6 +470,14 @@
       flex-direction: column;
       overflow: hidden;
       box-shadow: 0 16px 45px rgba(0,0,0,0.4);
+    }
+
+    /* Ajuste quando entra em tela cheia nativa */
+    :fullscreen .reader-window,
+    :-webkit-full-screen .reader-window {
+      max-width: 100vw;
+      height: 100vh;
+      border-radius: 0;
     }
 
     .reader-toolbar {
@@ -545,7 +546,6 @@
       line-height: 1.85;
       color: #2b2622;
       background: #ffffff;
-      transition: background 0.2s, color 0.2s;
     }
 
     .theme-sepia {
@@ -568,7 +568,7 @@
     .reader-content-area .devotional-verse {
       background: #faf6ed;
       border-left: 4px solid var(--accent-gold);
-      padding: 1rem 1.5rem;
+      padding: 1.2rem 1.6rem;
       margin-bottom: 2rem;
       font-style: italic;
       border-radius: 4px;
@@ -582,6 +582,24 @@
     .reader-content-area p {
       margin-bottom: 1.4rem;
       text-indent: 1.5rem;
+    }
+
+    /* FORMATO DE IMPRESSÃO / SALVAR EM PDF */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #readerContentArea, #readerContentArea * {
+        visibility: visible;
+      }
+      #readerContentArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+      }
     }
 
     @media (max-width: 600px) {
@@ -607,9 +625,7 @@
 </head>
 <body>
 
-  <!-- ========================================================= -->
-  <!-- 1. TELA DE LOGIN                                         -->
-  <!-- ========================================================= -->
+  <!-- LOGIN -->
   <div id="loginOverlay" class="login-overlay">
     <div class="login-card" id="loginCard">
       <span class="login-badge">Acesso Exclusivo</span>
@@ -628,9 +644,7 @@
     </div>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- 2. CABEÇALHO COM BOTÕES DE INÍCIO E HISTÓRICO             -->
-  <!-- ========================================================= -->
+  <!-- CABEÇALHO -->
   <header>
     <div class="top-actions">
       <button id="homeBtnTop" class="top-btn" title="Voltar para a tela inicial">Início 🏠</button>
@@ -644,9 +658,7 @@
     <p class="subtitle">"Dedique-se à leitura pública da Escritura, à exortação e ao ensino."</p>
   </header>
 
-  <!-- ========================================================= -->
-  <!-- 3. BARRA DE PESQUISA E FILTROS                            -->
-  <!-- ========================================================= -->
+  <!-- ÁREA DE PESQUISA -->
   <main>
     <section class="search-wrapper">
       <div class="search-box">
@@ -654,19 +666,19 @@
           type="text" 
           id="searchInput" 
           class="search-input" 
-          placeholder="Pesquise títulos, temas ou autores (ex: A família do pastor, C.S. Lewis, Graça)..." 
+          placeholder="Pesquise títulos ou temas (ex: A família do pastor, Oração, Spurgeon)..." 
         />
         <button id="searchBtn" class="search-button">Buscar</button>
       </div>
       <button id="resetSearchBtn" class="home-reset-btn" title="Limpar pesquisa e voltar ao Início">Voltar ao Início</button>
     </section>
 
-    <!-- ABAS / FILTROS -->
+    <!-- ABAS -->
     <div class="quick-filters">
       <button class="filter-btn active" data-filter="todos">Todos os Livros</button>
-      <button class="filter-btn" data-filter="devocional">Pão Diário & Devocionais</button>
-      <button class="filter-btn" data-filter="teologia">Teologia & Família</button>
-      <button class="filter-btn" data-filter="escrituras">Salmos & Provérbios</button>
+      <button class="filter-btn" data-filter="familia">Família & Casamento</button>
+      <button class="filter-btn" data-filter="devocional">Pão Diário & Oração</button>
+      <button class="filter-btn" data-filter="teologia">Teologia & Clássicos</button>
       <button class="filter-btn" data-filter="historico">🕒 Meu Histórico (<span id="histCount">0</span>)</button>
     </div>
 
@@ -676,19 +688,17 @@
       <p id="statusText">Buscando no acervo...</p>
     </div>
 
-    <!-- GRID DOS LIVROS -->
+    <!-- GRID -->
     <section id="booksGrid" class="books-grid"></section>
   </main>
 
-  <!-- ========================================================= -->
-  <!-- 4. LEITOR EMBUTIDO (COM TELA CHEIA E BAIXAR PDF)          -->
-  <!-- ========================================================= -->
+  <!-- LEITOR COM TELA CHEIA E IMPRESSÃO EM PDF DIRETA -->
   <div id="readerModal" class="reader-modal">
     <div class="reader-window" id="readerWindow">
       <div class="reader-toolbar">
         <div class="reader-book-title" id="readerBookTitle">Lendo Livro</div>
         <div class="reader-controls">
-          <button class="ctrl-btn" id="readerPdfBtn" title="Baixar PDF deste livro">📥 PDF</button>
+          <button class="ctrl-btn" id="readerPdfBtn" title="Baixar / Salvar PDF direto no navegador">📥 Salvar PDF</button>
           <button class="ctrl-btn" id="fullscreenBtn" title="Alternar Tela Cheia">⛶ Tela Cheia</button>
           <button class="ctrl-btn" id="fontDecBtn" title="Diminuir Fonte">A-</button>
           <button class="ctrl-btn" id="fontIncBtn" title="Aumentar Fonte">A+</button>
@@ -703,79 +713,96 @@
   </div>
 
   <footer>
-    Feito com amor para o Pastor James • Leitor Próprio com Histórico e Download de PDF
+    Feito com amor para o Pastor James • Leitor Próprio com Histórico e Download Direto
   </footer>
 
-  <!-- ========================================================= -->
-  <!-- JAVASCRIPT: LÓGICA, BUSCA GLOBAL, HISTÓRICO E PDF         -->
-  <!-- ========================================================= -->
   <script>
     const CORRECT_PASSWORD = "LIVROS007";
-    const AUTH_KEY = "pastor_james_library_auth_v3";
-    const HISTORY_KEY = "pastor_james_history";
+    const AUTH_KEY = "pastor_james_library_auth_v4";
+    const HISTORY_KEY = "pastor_james_history_v4";
 
     /* =========================================================
-       ACERVO INTEGRADO (COM O LIVRO 'A FAMÍLIA DO PASTOR' INCLUÍDO)
+       ACERVO PRÓPRIO COMPLETO DO PASTOR JAMES
        ========================================================= */
     const LOCAL_BOOKS = [
       {
         id: "familia-do-pastor",
-        category: "teologia",
-        title: "A Família do Pastor: Edificação e Desafios no Lar",
-        author: "Pr. James & Sabedoria Pastoral",
+        category: "familia",
+        title: "A Família do Pastor: Edificação, Sacerdócio e Desafios no Lar",
+        author: "Pr. James & Sabedoria Bíblica",
         cover: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>A Família do Pastor: O Primeiro Ministério</h2>
+          <h2>A Família do Pastor: O Primeiro e Mais Nobre Ministério</h2>
           <div class="devotional-verse">
             "Pois, se alguém não sabe governar a sua própria casa, como cuidará da igreja de Deus?" — 1 Timóteo 3:5
           </div>
-          <p>O ministério pastoral traz consigo privilégios eternos, mas também cobranças implacáveis. Muitas vezes, a congregação espera que a casa pastoral seja impecável e imune às tempestades que atingem qualquer família humana.</p>
-          <p>No entanto, a Bíblia nunca exigiu perfeição humana do pastor, e sim fidelidade, amor e presença. Os filhos do pastor precisam, antes de um ministro de púlpito, de um <strong>pai amoroso</strong> presente à mesa. A esposa do pastor necessita de um <strong>marido compreensivo</strong>, que a ame como Cristo amou a Sua Igreja.</p>
-          <p>Nunca negocie a bênção do seu lar pelo aplauso público. O sucesso de um pastor é medido primeiro pelo sorriso daqueles que convivem com ele atrás das portas fechadas de sua casa. Cuide do seu jardim familiar, e o Senhor cuidará da Sua igreja.</p>
+          <p>O ministério pastoral traz consigo privilégios eternos, mas também responsabilidades espirituais profundas. Diante das demandas do rebanho, de visitas nos hospitais, preparo de mensagens e aconselhamentos que consomem horas do dia, existe uma tentação constante: colocar o púlpito à frente do próprio lar.</p>
+          <p>No entanto, aos olhos do Criador, a família não é um anexo do ministério; <strong>a família é o primeiro ministério do pastor</strong>. Seus filhos precisam, antes de um pregador eloquente, de um pai atencioso, que ouça seus medos e sente-se à mesa para sorrir com eles. Sua esposa não é apenas a auxiliadora ministerial da igreja, mas a companheira da sua alma, digna de honra, carinho diário e proteção emocional.</p>
+          <p>Quando as luzes do templo se apagam e o som do coral silencia, são as paredes da casa pastoral que abrigam a realidade da vida. Cuide com ternura do seu altar doméstico. Um ministério abençoado floresce a partir de um casamento restaurado e de um lar onde habita a paz do Senhor.</p>
+          <div class="devotional-verse">
+            <strong>Oração Pastoral:</strong> Senhor Deus, renova as forças do Teu servo. Que o lar do Pastor James seja um manancial de paz, alegria e proteção divina. Guarda seus filhos e abençoa o seu casamento a cada novo dia. Em nome de Jesus, Amém.
+          </div>
         `
       },
       {
-        id: "pao-diario-hoje",
+        id: "pao-diario-devocional",
         category: "devocional",
-        title: "Pão Diário: Meditações da Graça e Força",
+        title: "Pão Diário: Meditações da Graça e Força para a Alma",
         author: "C.H. Spurgeon & Acervo Pastoral",
         cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>Pão Diário: O Maná Que Nunca Falta</h2>
+          <h2>Pão Diário: O Maná Que Alimenta nas Tribulações</h2>
           <div class="devotional-verse">
             "Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós." — 1 Pedro 5:7
           </div>
-          <p>O cuidado de Deus para com as nossas vidas é contínuo e silencioso. Quando nos sentimos fatigados pelas batalhas diárias, Ele já preparou o maná de sustento.</p>
-          <p>Não tente carregar os problemas do amanhã com as forças que lhe foram concedidas para o dia de hoje. A cada manhã as misericórdias se renovam. Descanse no cuidado do Pai Celeste!</p>
+          <p>A ansiedade é um fardo pesado demais para os ombros humanos. Quantas noites os homens e mulheres de Deus passam acordados pensando no dia de amanhã, nas contas a saldar, nos desvios dos jovens e nas aflições dos enfermos.</p>
+          <p>O apóstolo Pedro nos convida a um ato consciente de entrega: <em>lançar</em>. Não se trata de segurar o fardo enquanto oramos, mas de passar o peso das nossas mãos para as mãos Daquele que nunca dorme e que comanda o movimento dos mares e das estrelas.</p>
+          <p>Receba hoje a porção do maná divino. A graça de Deus não falha e é renovada pontualmente a cada alvorada. Respire a paz do Espírito Santo e descanse o seu coração.</p>
         `
       },
       {
-        id: "peregrino",
+        id: "oracao-poderosa",
+        category: "devocional",
+        title: "O Homem de Oração: O Segredo do Avivamento Pessoal",
+        author: "E.M. Bounds & John Wesley",
+        cover: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=500&auto=format&fit=crop&q=80",
+        content: `
+          <h2>O Poder da Oração Secreta</h2>
+          <div class="devotional-verse">
+            "Mas tu, quando orares, entra no teu aposento e, fechando a tua porta, ora a teu Pai que está em secreto." — Mateus 6:6
+          </div>
+          <p>A igreja não precisa de melhores maquinários, de programas mais atrativos ou de métodos humanos mais persuasivos; o que a igreja necessita desesperadamente é de pessoas que saibam dobrar os joelhos em oração.</p>
+          <p>O homem que prevalece de joelhos diante de Deus é capaz de permanecer de pé diante de qualquer adversidade humana. A oração não transforma Deus; a oração transforma quem ora, alinhando a vontade humana com os desígnios soberanos dos céus.</p>
+        `
+      },
+      {
+        id: "peregrino-completo",
         category: "teologia",
-        title: "O Peregrino (Edição Pastoral Completa)",
+        title: "O Peregrino: A Grande Jornada à Cidade Celestial",
         author: "John Bunyan",
         cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>O Peregrino: A Jornada à Cidade Celestial</h2>
+          <h2>A Fuga da Cidade da Destruição</h2>
           <div class="devotional-verse">
             "Entrai pela porta estreita; porque larga é a porta, e espaçoso o caminho que conduz à perdição." — Mateus 7:13
           </div>
-          <p>Caminhando pelo deserto deste mundo, deitei-me numa caverna para dormir e sonhei com um homem maltrapilho, com um fardo imenso nas costas e um livro em suas mãos.</p>
-          <p>Ele leu no livro que a sua cidade seria consumida pelo fogo, e clamou: 'O que devo fazer para me salvar?'. Evangelista apontou-lhe o caminho estreito rumo à Luz, iniciando a maior jornada de fé da literatura cristã.</p>
+          <p>Caminhando pelo deserto deste mundo, deitei-me numa caverna para dormir e tive um sonho vívido. Vi um homem vestido de andrajos, em pé, de costas para a sua cidade, carregando um fardo esmagador sobre os ombros e segurando um Livro sagrado nas mãos.</p>
+          <p>Ao abrir o livro, tremeu e chorou em profunda angústia, dizendo: <em>'O que devo fazer para me salvar?'</em>. Foi então que encontrou Evangelista, que lhe apontou uma luz distante sobre a porta estreita. Ali começou a maior caminhada de salvação e perseverança da história da literatura cristã.</p>
         `
       },
       {
-        id: "salmos-pastor",
-        category: "escrituras",
-        title: "O Senhor é o Meu Pastor (Salmo 23 Explicado)",
-        author: "Clássicos Reformados",
+        id: "salmo-23-comentado",
+        category: "teologia",
+        title: "Salmo 23 Explicado Versículo por Versículo",
+        author: "Clássicos da Fé Cristã",
         cover: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=500&auto=format&fit=crop&q=80",
         content: `
-          <h2>Salmo 23: Refrigério para a Alma Cansada</h2>
+          <h2>O Senhor é o Meu Pastor: A Certeza do Cuidado Divino</h2>
           <div class="devotional-verse">
-            "O Senhor é o meu pastor; nada me faltará. Deitar-me faz em verdes pastos, guia-me mansamente a águas tranquilas." — Salmo 23:1-2
+            "O Senhor é o meu pastor, nada me faltará. Deitar-me faz em verdes pastos, guia-me mansamente a águas tranquilas." — Salmo 23:1-2
           </div>
-          <p>Mesmo os pastores terrenos precisam lembrar que são ovelhas do Supremo Pastor. Permita que Deus guie os seus passos rumo às águas serenas da Sua presença restauradora.</p>
+          <p>Davi era experiente no pastoreio e sabia exatamente como as ovelhas dependem de proteção contra predadores, de remédio para suas feridas e de pastos limpos. Ao afirmar que o Senhor é o seu Pastor, ele reconhece a sua total vulnerabilidade e ao mesmo tempo a sua segurança inabalável.</p>
+          <p>Mesmo quando o caminho nos conduz pelo vale da sombra da morte, a presença de Deus permanece ao nosso lado. A vara e o cajado não ferem a ovelha: a vara afugenta os lobos e o cajado resgata quem se perdeu à beira do abismo.</p>
         `
       }
     ];
@@ -799,7 +826,7 @@
     const statusText = document.getElementById("statusText");
     const histCount = document.getElementById("histCount");
 
-    // Modal e Leitor
+    // Elementos Leitor
     const readerModal = document.getElementById("readerModal");
     const readerWindow = document.getElementById("readerWindow");
     const readerBookTitle = document.getElementById("readerBookTitle");
@@ -812,7 +839,7 @@
     let currentFontSize = 1.25;
 
     // ==========================================
-    // 1. SISTEMA DE LOGIN (LIVROS007)
+    // AUTENTICAÇÃO
     // ==========================================
     function checkAuth() {
       if (localStorage.getItem(AUTH_KEY) === "true") {
@@ -853,7 +880,7 @@
     });
 
     // ==========================================
-    // 2. HISTÓRICO DE LEITURAS (LOCALSTORAGE)
+    // HISTÓRICO
     // ==========================================
     function getHistorico() {
       try {
@@ -865,7 +892,6 @@
 
     function salvarNoHistorico(livro) {
       let hist = getHistorico();
-      // Remove repetição do mesmo livro
       hist = hist.filter(item => item.title.toLowerCase() !== livro.title.toLowerCase());
       hist.unshift({
         title: livro.title,
@@ -874,7 +900,6 @@
         content: livro.content,
         timestamp: new Date().toLocaleDateString('pt-BR')
       });
-      // Guarda até 50 livros no histórico
       if (hist.length > 50) hist.pop();
       localStorage.setItem(HISTORY_KEY, JSON.stringify(hist));
       atualizarContadorHistorico();
@@ -892,7 +917,7 @@
       const hist = getHistorico();
       if (hist.length === 0) {
         statusIndicator.style.display = "block";
-        statusText.textContent = "O Pastor James ainda não abriu livros recentemente. Abra algum livro para registrá-lo aqui!";
+        statusText.textContent = "O histórico está vazio. Abra qualquer livro para salvá-lo aqui.";
         booksGrid.innerHTML = "";
       } else {
         mostrarLivros(hist);
@@ -900,16 +925,17 @@
     }
 
     // ==========================================
-    // 3. DOWNLOAD DE PDF INTELIGENTE
+    // SALVAR / BAIXAR PDF DIRETO NO NAVEGADOR
     // ==========================================
-    function baixarPdf(livro) {
-      // Abre uma busca inteligente pelo arquivo PDF do livro na internet
-      const query = encodeURIComponent(`${livro.title} ${livro.author} filetype:pdf`);
-      window.open(`https://www.google.com/search?q=${query}`, "_blank");
+    function baixarPdfDireto(livro) {
+      abrirLeitor(livro);
+      setTimeout(() => {
+        window.print(); // Abre a janela oficial do navegador para Salvar em PDF na hora!
+      }, 400);
     }
 
     // ==========================================
-    // 4. RENDERIZAÇÃO DOS CARDS
+    // EXIBIR CARDS
     // ==========================================
     function mostrarLivros(lista) {
       statusIndicator.style.display = "none";
@@ -917,7 +943,7 @@
 
       if (!lista || lista.length === 0) {
         statusIndicator.style.display = "block";
-        statusText.textContent = "Nenhum livro foi encontrado para essa busca. Tente outras palavras-chave.";
+        statusText.textContent = "Nenhum livro encontrado para esta busca.";
         return;
       }
 
@@ -925,11 +951,9 @@
         const card = document.createElement("div");
         card.className = "book-card";
 
-        const badgeHtml = item.content ? `<span class="badge-internal">Leitura Imediata</span>` : "";
-
         card.innerHTML = `
           <div class="cover-container">
-            ${badgeHtml}
+            <span class="badge-internal">Leitura Imediata</span>
             <img src="${item.cover}" alt="${item.title}" class="book-cover" onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80'" />
           </div>
           <div class="book-details">
@@ -939,7 +963,7 @@
             </div>
             <div class="card-actions">
               <button class="read-button">📖 Ler Livro</button>
-              <button class="pdf-button" title="Baixar PDF do livro">📥 PDF</button>
+              <button class="pdf-button" title="Salvar PDF no computador/celular">📥 PDF</button>
             </div>
           </div>
         `;
@@ -950,7 +974,7 @@
 
         card.querySelector(".pdf-button").addEventListener("click", (e) => {
           e.stopPropagation();
-          baixarPdf(item);
+          baixarPdfDireto(item);
         });
 
         booksGrid.appendChild(card);
@@ -958,7 +982,7 @@
     }
 
     // ==========================================
-    // 5. BUSCA GLOBAL APRIMORADA (MILHÕES DE LIVROS)
+    // BUSCA UNIVERSAL ROBUSTA
     // ==========================================
     async function executarBusca() {
       const termo = searchInput.value.trim();
@@ -968,61 +992,68 @@
       }
 
       statusIndicator.style.display = "block";
-      statusText.textContent = `Pesquisando por "${termo}" em todos os acervos...`;
+      statusText.textContent = `Buscando "${termo}" em todos os acervos...`;
       booksGrid.innerHTML = "";
 
       const termoLower = termo.toLowerCase();
 
-      // 1. Procura no acervo local
+      // 1. Filtra primeiro na biblioteca local
       const locaisEncontrados = LOCAL_BOOKS.filter(b => 
         b.title.toLowerCase().includes(termoLower) || 
-        b.author.toLowerCase().includes(termoLower)
+        b.author.toLowerCase().includes(termoLower) ||
+        (termoLower.includes("familia") && b.category === "familia") ||
+        (termoLower.includes("pao") && b.category === "devocional")
       );
 
-      // 2. Consulta o Google Books (Sem restrições rígidas para não dar falso "livro não encontrado")
+      // 2. Busca na base de livros do Google Books sem quebrar filtros de idioma
+      let onlineEncontrados = [];
       try {
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(termo)}&maxResults=20&orderBy=relevance`;
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(termo)}&maxResults=20`;
         const res = await fetch(url);
         const data = await res.json();
-        
-        const googleLivros = (data.items || []).map(item => {
-          const info = item.volumeInfo || {};
-          const desc = info.description ? info.description.replace(/<[^>]*>?/gm, '') : 'Este volume faz parte do acervo literário mundial disponível para o Pastor James.';
-          
-          return {
-            id: item.id,
-            title: info.title || "Título Indisponível",
-            author: info.authors ? info.authors.join(", ") : "Autor não informado",
-            cover: info.imageLinks && info.imageLinks.thumbnail 
-              ? info.imageLinks.thumbnail.replace("http://", "https://") 
-              : "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
-            content: `
-              <h2>${info.title}</h2>
-              <p><strong>Autor(es):</strong> ${info.authors ? info.authors.join(", ") : "Não informado"}</p>
-              <p><strong>Editora:</strong> ${info.publisher || "Acervo Geral"} ${info.publishedDate ? '(' + info.publishedDate + ')' : ''}</p>
-              <div class="devotional-verse">
-                ${desc}
-              </div>
-              <p><em>Dica Pastoral: Clique no botão "📥 PDF" no topo para baixar o documento completo deste livro na íntegra.</em></p>
-            `
-          };
-        });
 
-        const todosOsResultados = [...locaisEncontrados, ...googleLivros];
-        mostrarLivros(todosOsResultados);
-      } catch (err) {
-        if (locaisEncontrados.length > 0) {
-          mostrarLivros(locaisEncontrados);
-        } else {
-          statusIndicator.style.display = "block";
-          statusText.textContent = "Erro temporário ao consultar a base global. Exibindo acervo principal.";
-          mostrarLivros(LOCAL_BOOKS);
+        if (data.items && data.items.length > 0) {
+          onlineEncontrados = data.items.map(item => {
+            const info = item.volumeInfo || {};
+            const desc = info.description 
+              ? info.description.replace(/<[^>]*>?/gm, '') 
+              : 'Este volume faz parte do acervo internacional de teologia e literatura cristã.';
+
+            return {
+              id: item.id,
+              title: info.title || "Título Indisponível",
+              author: info.authors ? info.authors.join(", ") : "Autor não informado",
+              cover: info.imageLinks && info.imageLinks.thumbnail 
+                ? info.imageLinks.thumbnail.replace("http://", "https://") 
+                : "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
+              content: `
+                <h2>${info.title}</h2>
+                <p><strong>Autor(es):</strong> ${info.authors ? info.authors.join(", ") : "Não informado"}</p>
+                <p><strong>Publicação:</strong> ${info.publisher || "Acervo de Obras"} ${info.publishedDate ? '(' + info.publishedDate + ')' : ''}</p>
+                <div class="devotional-verse">
+                  ${desc}
+                </div>
+                <p>Este livro foi catalogado pelo sistema global para os estudos do Pastor James. Para imprimir o resumo ou salvar em PDF no seu aparelho, utilize o botão <strong>"📥 Salvar PDF"</strong> na barra superior.</p>
+              `
+            };
+          });
         }
+      } catch (e) {
+        console.warn("Busca online indisponível no momento.");
+      }
+
+      const resultadoFinal = [...locaisEncontrados, ...onlineEncontrados];
+
+      if (resultadoFinal.length > 0) {
+        mostrarLivros(resultadoFinal);
+      } else {
+        statusIndicator.style.display = "block";
+        statusText.textContent = `Nenhum livro foi encontrado para "${termo}". Tente palavras como 'Pastor', 'Família', 'Oração' ou 'Spurgeon'.`;
       }
     }
 
     // ==========================================
-    // 6. VOLTAR AO INÍCIO
+    // NAVEGAÇÃO E RESET
     // ==========================================
     function carregarInicio() {
       searchInput.value = "";
@@ -1031,7 +1062,6 @@
       mostrarLivros(LOCAL_BOOKS);
     }
 
-    // Eventos de Navegação / Início
     resetSearchBtn.addEventListener("click", carregarInicio);
     homeBtnTop.addEventListener("click", carregarInicio);
     brandTitleLink.addEventListener("click", carregarInicio);
@@ -1042,7 +1072,6 @@
       if (e.key === "Enter") executarBusca();
     });
 
-    // Filtros de Categoria
     document.querySelectorAll(".filter-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const categoria = btn.dataset.filter;
@@ -1065,7 +1094,7 @@
     });
 
     // ==========================================
-    // 7. LEITOR (TELA CHEIA, PDF E TEMAS)
+    // LEITOR INTERNO & CORREÇÃO DE TELA CHEIA
     // ==========================================
     function abrirLeitor(livro) {
       currentBookReading = livro;
@@ -1073,7 +1102,6 @@
       readerContentArea.innerHTML = livro.content;
       readerModal.style.display = "flex";
       document.body.style.overflow = "hidden";
-
       salvarNoHistorico(livro);
     }
 
@@ -1090,25 +1118,34 @@
       if (e.target === readerModal) fecharLeitor();
     });
 
-    // Botão de PDF dentro do Leitor
+    // Salvar PDF a partir da barra do Leitor
     readerPdfBtn.addEventListener("click", () => {
-      if (currentBookReading) baixarPdf(currentBookReading);
+      window.print();
     });
 
-    // Alternar Tela Cheia (Fullscreen)
+    // Alternar Tela Cheia com detecção correta de estado
     fullscreenBtn.addEventListener("click", () => {
       if (!document.fullscreenElement) {
-        readerWindow.requestFullscreen().catch(err => {
-          alert(`Não foi possível ativar tela cheia: ${err.message}`);
+        readerModal.requestFullscreen().catch(() => {
+          readerWindow.requestFullscreen().catch(err => {
+            alert("O seu navegador bloqueou a tela cheia: " + err.message);
+          });
         });
-        fullscreenBtn.textContent = "⛶ Sair da Tela Cheia";
       } else {
         document.exitFullscreen();
+      }
+    });
+
+    // Evento nativo para corrigir o texto do botão de tela cheia
+    document.addEventListener("fullscreenchange", () => {
+      if (document.fullscreenElement) {
+        fullscreenBtn.textContent = "⛶ Sair da Tela Cheia";
+      } else {
         fullscreenBtn.textContent = "⛶ Tela Cheia";
       }
     });
 
-    // Tamanho da Fonte
+    // Ajuste de Tamanho da Fonte
     document.getElementById("fontIncBtn").addEventListener("click", () => {
       if (currentFontSize < 2.2) {
         currentFontSize += 0.15;
@@ -1136,7 +1173,7 @@
       readerContentArea.className = "reader-content-area";
     });
 
-    // Início
+    // Iniciar aplicação
     checkAuth();
   </script>
 </body>
